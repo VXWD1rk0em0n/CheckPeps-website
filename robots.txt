@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Placeholder policy documents are not final and are excluded from indexing
+# until the CheckPeps team publishes the approved text. Remove these lines and
+# the matching <meta name="robots" content="noindex"> tags together.
+Disallow: /privacy.html
+Disallow: /terms.html
+Disallow: /data-practices.html
+
+Sitemap: https://checkpeps.com/sitemap.xml

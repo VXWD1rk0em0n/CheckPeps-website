@@ -1,0 +1,22 @@
+{
+  "name": "CheckPeps",
+  "short_name": "CheckPeps",
+  "description": "A peptide-education assistant that maps goals to peptide categories, provides educational context, and routes users toward licensed professionals.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0f6b6b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}

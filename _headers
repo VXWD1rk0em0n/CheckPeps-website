@@ -1,0 +1,34 @@
+# Netlify / Cloudflare Pages `_headers` format.
+# For nginx, Apache, or a CDN, translate the same values — see README.md.
+#
+# The CSP is deliberately strict because the site genuinely needs nothing
+# external: no CDN, no web fonts, no analytics, no XHR. If a header here starts
+# blocking something, that means a third-party dependency was added and should
+# be reviewed rather than the header loosened.
+
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Fingerprint these filenames before turning the cache up; as plain names they
+# must stay revalidated or a CSS change will not reach returning visitors.
+/styles.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/main.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+/og-image.png
+  Cache-Control: public, max-age=604800
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800

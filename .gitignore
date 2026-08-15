@@ -1,0 +1,19 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+
+# This is a dependency-free static site. If a build step or package manager is
+# ever added, these are the things that must not be committed.
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+
+# Local server logs
+*.log

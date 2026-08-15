@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CheckPeps — Peptide education, with the clinical line drawn clearly</title>
+    <meta
+      name="description"
+      content="CheckPeps is a peptide-education assistant. It maps your goals to relevant peptide categories, explains them in plain language, and routes you to a licensed professional for anything clinical. It does not prescribe, dose, or give protocols."
+    />
+    <link rel="canonical" href="https://checkpeps.com/" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CheckPeps" />
+    <meta property="og:url" content="https://checkpeps.com/" />
+    <meta
+      property="og:title"
+      content="CheckPeps — Peptide education, with the clinical line drawn clearly"
+    />
+    <meta
+      property="og:description"
+      content="A peptide-education assistant that maps goals to peptide categories, explains them in plain language, and routes you to a licensed professional for anything clinical."
+    />
+    <meta property="og:image" content="https://checkpeps.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="CheckPeps — peptide education assistant. Does not prescribe, dose, or give protocols."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0f6b6b" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1418" media="(prefers-color-scheme: dark)" />
+
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/main.js" defer></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "CheckPeps",
+        "url": "https://checkpeps.com/",
+        "description": "A peptide-education assistant that maps goals to peptide categories, provides educational context, and routes users toward licensed professionals for anything clinical."
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href="/">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M12 2.2 20.2 6v6.1c0 4.6-3.3 8.3-8.2 9.7-4.9-1.4-8.2-5.1-8.2-9.7V6L12 2.2Z"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path
+              d="m8.4 12.1 2.5 2.5 4.7-4.9"
+              stroke="currentColor"
+              stroke-width="1.9"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          CheckPeps
+        </a>
+
+        <button
+          class="nav__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M4 7h16M4 12h16M4 17h16"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          Menu
+        </button>
+
+        <nav class="nav" id="site-nav" aria-label="Primary">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="/" aria-current="page">Home</a></li>
+            <li><a class="nav__link" href="/how-it-works.html">How it works</a></li>
+            <li><a class="nav__link" href="/safety.html">Safety &amp; scope</a></li>
+            <li>
+              <a class="nav__link" href="/medical-disclaimer.html">Medical disclaimer</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============================ HERO ============================ -->
+      <!-- Answers, above the fold: what it is, what it will not do, how it
+           works, and where to go next. -->
+      <section class="hero">
+        <div class="wrap hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow">Peptide education assistant</p>
+            <h1>
+              <span>Learn what peptides are.</span>
+              <span>Not what to take.</span>
+            </h1>
+            <p class="lede">
+              CheckPeps maps the goal you describe to the peptide categories that are
+              relevant to it, explains them in plain language, and hands you to a
+              licensed professional the moment a question becomes clinical.
+            </p>
+
+            <div class="btn-row">
+              <a class="btn btn--primary" href="/how-it-works.html">
+                See how it works
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M5 12h13m-5.5-6 6 6-6 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+              <a class="btn btn--secondary" href="/safety.html">Read the safety model</a>
+            </div>
+
+            <div class="boundaries">
+              <p class="boundaries__label" id="boundaries-label">
+                What CheckPeps will not do
+              </p>
+              <ul class="chips" aria-labelledby="boundaries-label">
+                <li class="chip">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                    <path d="m5.6 5.6 12.8 12.8" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Prescribe
+                </li>
+                <li class="chip">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                    <path d="m5.6 5.6 12.8 12.8" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Dosing
+                </li>
+                <li class="chip">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                    <path d="m5.6 5.6 12.8 12.8" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Injection technique
+                </li>
+                <li class="chip">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                    <path d="m5.6 5.6 12.8 12.8" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Reconstitution
+                </li>
+                <li class="chip">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                    <path d="m5.6 5.6 12.8 12.8" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Stacking
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Inline SVG + CSS only: no image request, nothing to lazy-load. -->
+          <div class="hero__panel">
+            <p class="panel__title" id="flow-title">A conversation, end to end</p>
+            <ol class="flow" aria-labelledby="flow-title">
+              <li class="flow__step">
+                <span class="flow__num" aria-hidden="true">1</span>
+                <div class="flow__body">
+                  <p class="flow__name">You describe a goal</p>
+                  <p class="flow__desc">
+                    In your own words — what you are trying to understand, and why.
+                  </p>
+                </div>
+              </li>
+              <li class="flow__step">
+                <span class="flow__num" aria-hidden="true">2</span>
+                <div class="flow__body">
+                  <p class="flow__name">Goal maps to peptide categories</p>
+                  <p class="flow__desc">
+                    CheckPeps identifies which categories are relevant to that goal — and
+                    which are not.
+                  </p>
+                </div>
+              </li>
+              <li class="flow__step">
+                <span class="flow__num" aria-hidden="true">3</span>
+                <div class="flow__body">
+                  <p class="flow__name">You get educational context</p>
+                  <p class="flow__desc">
+                    What the category is, how it is discussed, and where the open questions
+                    are.
+                  </p>
+                </div>
+              </li>
+              <li class="flow__step">
+                <span class="flow__num" aria-hidden="true">4</span>
+                <div class="flow__body">
+                  <p class="flow__name">Relevant health context is screened</p>
+                  <p class="flow__desc">
+                    CheckPeps reviews the health information you choose to share for topics
+                    that belong with a professional.
+                  </p>
+                </div>
+              </li>
+              <li class="flow__step flow__step--terminal">
+                <span class="flow__num" aria-hidden="true">5</span>
+                <div class="flow__body">
+                  <p class="flow__name">Escalation routes you to a professional</p>
+                  <p class="flow__desc">
+                    Defined conditions end the educational track and point you to a
+                    licensed professional.
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= WHO IT'S FOR ======================== -->
+      <section class="section section--subtle" aria-labelledby="who-heading">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="eyebrow">Who it is for</p>
+            <h2 id="who-heading">For people doing their reading first</h2>
+            <p class="lede">
+              CheckPeps is built for the research stage — before decisions, and before a
+              clinical conversation.
+            </p>
+          </div>
+
+          <div class="grid">
+            <article class="card">
+              <div class="card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 6.5c-1.6-1.6-3.4-2-5.5-2-.8 0-1.5.6-1.5 1.4v10.7c0 .8.7 1.4 1.5 1.4 2.1 0 3.9.4 5.5 2 1.6-1.6 3.4-2 5.5-2 .8 0 1.5-.6 1.5-1.4V5.9c0-.8-.7-1.4-1.5-1.4-2.1 0-3.9.4-5.5 2Zm0 0V19"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3>First-time researchers</h3>
+              <p>
+                You have heard peptides mentioned and want an explanation that is not a
+                sales page or a forum thread.
+              </p>
+            </article>
+
+            <article class="card">
+              <div class="card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M8 21h8m-4-4v4m-7-16h14v6.5a7 7 0 0 1-14 0V5Z"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3>People preparing for an appointment</h3>
+              <p>
+                You want to walk in already understanding the vocabulary, so the time with
+                your clinician goes further.
+              </p>
+            </article>
+
+            <article class="card">
+              <div class="card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 21s-7.5-4.4-7.5-10A4.5 4.5 0 0 1 12 8.2 4.5 4.5 0 0 1 19.5 11c0 5.6-7.5 10-7.5 10Z"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3>Anyone who wants the limits stated</h3>
+              <p>
+                You would rather be told plainly where a tool stops than be handed
+                confident answers it should not be giving.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== WHY SAFETY DIFFERS ===================== -->
+      <section class="section" aria-labelledby="safety-heading">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="eyebrow">Why the safety model is different</p>
+            <h2 id="safety-heading">The boundaries are built in, not asked for</h2>
+            <p class="lede">
+              Most assistants are told to be careful. CheckPeps is built so the careful
+              answer is the only one it can give.
+            </p>
+          </div>
+
+          <div class="grid">
+            <article class="card">
+              <h3>Structural, not stylistic</h3>
+              <p>
+                Refusal to give dosing, technique, reconstitution, or stacking guidance is
+                part of the system's design rather than a tone it tries to hold. It does
+                not erode over a long conversation or under rephrasing.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Escalation is a defined state</h3>
+              <p>
+                Specific conditions move a conversation out of the educational track and
+                toward a licensed professional. That transition is a designed behaviour,
+                not a judgement call made in the moment.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Education stays separate from instruction</h3>
+              <p>
+                CheckPeps explains what a peptide category is and how it is discussed. It
+                does not convert that explanation into a protocol you could follow.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>The handoff is the destination</h3>
+              <p>
+                Routing you to a licensed professional is the intended end of a clinical
+                question — not a fallback for when the assistant runs out of answers.
+              </p>
+            </article>
+          </div>
+
+          <div class="callout" style="margin-top: 2rem">
+            <p class="callout__title">What this does not mean</p>
+            <p>
+              A designed boundary is a description of how CheckPeps behaves. It is not a
+              guarantee of any outcome, and it does not make CheckPeps a substitute for
+              professional medical judgement. Decisions about your health belong with a
+              licensed professional who knows your situation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================= DOES / DOES NOT ======================= -->
+      <section class="section section--subtle" aria-labelledby="scope-heading">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="eyebrow">Scope</p>
+            <h2 id="scope-heading">Exactly what is and is not on offer</h2>
+          </div>
+
+          <div class="split">
+            <div class="panel panel--does">
+              <h3 class="panel__heading">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
+                  <path
+                    d="m8 12.2 2.7 2.7L16 9.6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                What CheckPeps does
+              </h3>
+              <ul class="checklist">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="m5 12.5 4.5 4.5L19 7.5"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>Maps the goals you describe to relevant peptide categories</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="m5 12.5 4.5 4.5L19 7.5"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>Provides educational context on those categories in plain language</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="m5 12.5 4.5 4.5L19 7.5"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    Screens the health information you choose to share for topics that
+                    belong with a professional
+                  </span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="m5 12.5 4.5 4.5L19 7.5"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    Identifies conditions that should escalate out of an educational
+                    conversation
+                  </span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="m5 12.5 4.5 4.5L19 7.5"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>Routes you toward licensed professionals for anything clinical</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="panel panel--does-not">
+              <h3 class="panel__heading">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
+                  <path
+                    d="m5.6 5.6 12.8 12.8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                What CheckPeps does not do
+              </h3>
+              <ul class="checklist">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M6 6l12 12M18 6 6 18"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Prescribe, or recommend that you take anything</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M6 6l12 12M18 6 6 18"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Give doses, dose ranges, or schedules</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M6 6l12 12M18 6 6 18"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Explain injection technique</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M6 6l12 12M18 6 6 18"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Provide reconstitution instructions</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M6 6l12 12M18 6 6 18"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Provide stacking or protocol guidance</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M6 6l12 12M18 6 6 18"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Replace a licensed medical professional</span>
+                </li>
+              </ul>
+              <p class="panel__note">
+                These are product boundaries enforced by design, not fine print. Nothing
+                CheckPeps produces is a diagnosis, a treatment plan, or medical advice.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ NEXT ============================= -->
+      <section class="section" aria-labelledby="next-heading">
+        <div class="wrap">
+          <div class="cta prose" style="margin-inline: auto">
+            <p class="eyebrow">What you can do next</p>
+            <h2 id="next-heading">Start with how it actually works</h2>
+            <p class="lede">
+              Read the full conversation flow and the escalation model before you decide
+              whether CheckPeps is useful to you.
+            </p>
+            <div class="btn-row">
+              <a class="btn btn--primary" href="/how-it-works.html">See how it works</a>
+              <a class="btn btn--secondary" href="/safety.html">Safety &amp; scope</a>
+            </div>
+            <div class="callout callout--pending" style="text-align: left; margin-top: 1rem">
+              <p class="callout__title">Access and availability</p>
+              <p>
+                Sign-up, waitlist, pricing, and availability details are not published yet.
+                <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer__grid">
+          <div>
+            <a class="brand" href="/">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 2.2 20.2 6v6.1c0 4.6-3.3 8.3-8.2 9.7-4.9-1.4-8.2-5.1-8.2-9.7V6L12 2.2Z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="m8.4 12.1 2.5 2.5 4.7-4.9"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              CheckPeps
+            </a>
+            <p class="footer__blurb">
+              A peptide-education assistant. Educational context and professional
+              referral — never prescriptions, dosing, or protocols.
+            </p>
+          </div>
+
+          <nav aria-labelledby="footer-product">
+            <p class="footer__heading" id="footer-product">Product</p>
+            <ul class="footer__list">
+              <li><a href="/">Home</a></li>
+              <li><a href="/how-it-works.html">How it works</a></li>
+              <li><a href="/safety.html">Safety &amp; scope</a></li>
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="footer-policies">
+            <p class="footer__heading" id="footer-policies">Policies</p>
+            <ul class="footer__list">
+              <li>
+                <a href="/medical-disclaimer.html">Medical disclaimer</a>
+                <span class="footer__pending">Pending review</span>
+              </li>
+              <li>
+                <a href="/privacy.html">Privacy policy</a>
+                <span class="footer__pending">Pending review</span>
+              </li>
+              <li>
+                <a href="/terms.html">Terms of service</a>
+                <span class="footer__pending">Pending review</span>
+              </li>
+              <li>
+                <a href="/data-practices.html">Data &amp; privacy practices</a>
+                <span class="footer__pending">Pending review</span>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="footer__bottom">
+          <p class="footer__disclaimer">
+            CheckPeps provides general educational information about peptide categories. It
+            does not provide medical advice, diagnosis, or treatment, and it is not a
+            substitute for consultation with a licensed healthcare professional. Always
+            speak with a qualified provider about your own health.
+          </p>
+          <p class="footer__disclaimer">
+            Formal medical, legal, and regulatory disclaimer language:
+            <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span>
+          </p>
+          <p>&copy; 2026 CheckPeps. Company and jurisdiction details: <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

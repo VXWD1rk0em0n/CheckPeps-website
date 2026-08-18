@@ -166,6 +166,37 @@ hr {
   outline-offset: 4px;
 }
 
+/* Windows High Contrast and friends override every author background and
+   colour. Anything whose meaning was carried by a fill — the primary button,
+   the boundary chips, the numbered badges, the tinted does/does-not panels —
+   loses its shape unless it also has a real edge. `transparent` stays
+   transparent when forced, so those borders must be made explicit here. */
+@media (forced-colors: active) {
+  .btn,
+  .chip,
+  .flow__num,
+  .step__num {
+    border: 1px solid currentColor;
+  }
+
+  .card,
+  .callout,
+  .panel,
+  .hero__panel {
+    border: 1px solid CanvasText;
+  }
+
+  /* Decorative connector between flow steps; a forced background would drop it. */
+  .flow__step:not(:last-child)::before {
+    background: CanvasText;
+  }
+
+  /* The ring must not depend on a brand token that no longer renders. */
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 

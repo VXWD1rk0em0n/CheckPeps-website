@@ -132,7 +132,12 @@ In-browser checks performed, all 8 pages, light **and** dark:
 - 0 images without `alt`, 0 accessibility-exposed unlabelled SVGs, 0 empty links
 - 0 inline event handlers, 0 inline scripts, 0 cross-origin references
 - 0 forms, 0 inputs
-- No horizontal overflow at 375px; all tap targets ≥ 24px (WCAG 2.2 SC 2.5.8)
+- No horizontal overflow at **any width from 320px to 1920px**, across all 8
+  pages; all tap targets ≥ 24px (WCAG 2.2 SC 2.5.8)
+- WCAG 1.4.12 text spacing: no clipping or overflow with line-height 1.5,
+  letter-spacing 0.12em, word-spacing 0.16em, paragraph spacing 2em
+- Windows High Contrast supported via `@media (forced-colors: active)` — controls
+  whose meaning was carried by a background fill keep an explicit border
 - Nav toggle: opens, closes, closes on `Escape` with focus returned, closes on
   link activation
 

@@ -13,12 +13,15 @@ The product is a health-adjacent educational tool with hard regulatory
 boundaries. Every dependency added to this site is a new place for a tracker, a
 leaked key, or an unreviewed claim to appear. So the site has none:
 
-- **3 requests** to render the home page (HTML + CSS + JS), all same-origin.
-- **10.7 KB gzipped** critical path.
+- **4 requests** to render the home page (HTML + CSS + JS + the hero art), all
+  same-origin. Inner pages are 3 — they have no hero image.
+- **14 KB gzipped** of text, plus the hero art: 32 KB at `hero-1200.jpg` or
+  82 KB at `hero.jpg`, chosen by `srcset` from the viewport.
 - **No web fonts** — system font stack only.
-- **No raster images** in the page. All iconography and the flow diagram are
-  inline SVG. The only PNGs are `og-image.png` (fetched by social crawlers, not
-  by visitors) and `apple-touch-icon.png`.
+- **One raster image on the home page**: the hero art, in two `srcset` widths.
+  All iconography and the flow diagram remain inline SVG. `og-image.png` is
+  fetched by social crawlers rather than visitors, and `apple-touch-icon.png`
+  only on install.
 - **No analytics, no tags, no cookies, no forms, no inputs.** Verified: 0
   `<form>` and 0 `<input>` elements across all 8 pages.
 
@@ -40,9 +43,25 @@ If you add a dependency, re-run the checks in "Verification" below.
 | `robots.txt`, `sitemap.xml`, `site.webmanifest` | Crawl + install metadata |
 | `favicon.svg`, `apple-touch-icon.png`, `og-image.png` | Icons and social card |
 
-`og-image.png` and `apple-touch-icon.png` are generated, not hand-drawn. Their
-generator lives outside this repo; regenerate if the brand or the OG copy
-changes.
+`og-image.png`, `apple-touch-icon.png`, and `media/hero*.jpg` are generated, not
+hand-drawn. Their generators live outside this repo; regenerate if the brand or
+the OG copy changes.
+
+### Replacing the hero art
+
+The hero art is an abstract peptide-chain motif — deliberately not photography
+of vials, syringes, or reconstitution kits, since those depict the exact things
+the site says it will not help with. If you swap in commissioned art, three
+things must hold or the hero breaks:
+
+1. **Keep roughly 3:2.** It is `object-fit: cover` at `object-position: 65% 50%`.
+2. **Keep the left 55% quiet and dark.** The headline, lede, and chips sit there.
+3. **Do not remove `.hero__media::after`.** That overlay is the only thing
+   guaranteeing text contrast, and it is tuned to hold near-opaque across the
+   copy column then release quickly so the art reads on the right.
+
+After any swap, re-check contrast against the composited backdrop — not against
+a screenshot, because text antialiasing contaminates pixel sampling.
 
 ## Before you deploy
 

@@ -647,9 +647,11 @@ hr {
 .hero .flow__step:not(:last-child)::before { background: var(--deep-border); }
 
 /* Boundary chips need a light red to clear contrast on the deep field. */
+/* A light tint behind the chip raised its base and cost ~1.5:1 of contrast.
+   Backing it with the deep instead darkens the base and buys it back. */
 .hero .chip {
-  background: color-mix(in srgb, #ffb3b3 12%, transparent);
-  border-color: color-mix(in srgb, #ffb3b3 38%, transparent);
+  background: color-mix(in srgb, var(--deep) 62%, transparent);
+  border-color: color-mix(in srgb, #ffb3b3 42%, transparent);
   color: #ffb3b3;
 }
 
@@ -680,24 +682,60 @@ hr {
 /* Stands in for the photography an editorial site would open with: a soft field
    of brand colour so the first screen is not flat white. If real art arrives,
    this is the layer it replaces. */
-.hero::before {
+/* z-index 0 with the content lifted to 1, rather than a negative index behind
+   the hero. A negative-index child interacts badly with the parent's own
+   background and rendered nothing at all. */
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 65% 50%;
+}
+
+/* Guarantees copy contrast no matter what the art behind it does. Strongest at
+   the left where the headline sits, thinning out to let the image show. Do not
+   remove this when swapping in different art — it is the only thing keeping the
+   hero text legible. */
+.hero__media::after {
   content: "";
   position: absolute;
-  inset: -30% -15% auto -15%;
-  height: 150%;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      55% 55% at 18% 12%,
-      color-mix(in srgb, var(--accent-on-deep) 20%, transparent),
-      transparent 68%
-    ),
-    radial-gradient(
-      50% 50% at 90% 6%,
-      color-mix(in srgb, var(--accent-on-deep) 11%, transparent),
-      transparent 66%
-    );
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    /* Hold near-opaque across the copy column, then release quickly so the art
+       reads at close to full strength on the right. A gentle slope across the
+       whole width cannot do both: it either washes out the art or lets the
+       glow bleed under the text. */
+    color-mix(in srgb, var(--deep) 98%, transparent) 0%,
+    color-mix(in srgb, var(--deep) 96%, transparent) 55%,
+    color-mix(in srgb, var(--deep) 45%, transparent) 73%,
+    transparent 90%
+  );
+}
+
+/* Below the two-column breakpoint the copy spans the whole box, so it crosses
+   the gradient's release point and lands on unveiled art — measured at 1.3:1.
+   There is no room for the art to read at this width anyway, so the overlay
+   goes flat and strong and the art survives only as texture. */
+@media (max-width: 899px) {
+  .hero__media::after {
+    background: color-mix(in srgb, var(--deep) 93%, transparent);
+  }
+}
+
+/* The glow pseudo-element is gone: the art supplies the atmosphere now, and
+   keeping it meant another layer sitting over the image. */
+
+.hero__grid {
+  position: relative;
+  z-index: 1;
 }
 
 .hero__grid {
@@ -706,11 +744,29 @@ hr {
   align-items: start;
 }
 
-@media (min-width: 960px) {
-  .hero__grid {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+/* Single column now. The right side of the hero is the art, which is the whole
+   point of having art. */
+.hero__copy {
+  max-width: 40rem;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    min-height: min(84vh, 780px);
+    display: grid;
     align-items: center;
   }
+}
+
+/* The flow panel keeps its light-card styling once outside the hero. */
+.flow-section {
+  display: grid;
+  justify-items: center;
+}
+
+.flow-section .hero__panel {
+  width: 100%;
+  max-width: 46rem;
 }
 
 .hero__copy > * + * { margin-top: 1.15rem; }

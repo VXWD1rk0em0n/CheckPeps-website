@@ -111,6 +111,22 @@
       <!-- Answers, above the fold: what it is, what it will not do, how it
            works, and where to go next. -->
       <section class="hero">
+        <!-- Decorative only, so alt is empty. Replacing this art is a matter of
+             swapping the two files: keep the 3:2 ratio and keep the left third
+             dark, because the headline sits over it. -->
+        <div class="hero__media">
+          <img
+            src="/media/hero-1200.jpg"
+            srcset="/media/hero-1200.jpg 1200w, /media/hero.jpg 2400w"
+            sizes="100vw"
+            alt=""
+            width="2400"
+            height="1600"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+
         <div class="wrap hero__grid">
           <div class="hero__copy">
             <p class="eyebrow">Peptide education assistant</p>
@@ -220,7 +236,13 @@
             </div>
           </div>
 
-          <!-- Inline SVG + CSS only: no image request, nothing to lazy-load. -->
+        </div>
+      </section>
+
+      <!-- Moved out of the hero so the hero art has somewhere to be seen; the
+           flow is unchanged, it just gets its own section now. -->
+      <section class="section section--subtle" aria-labelledby="flow-title">
+        <div class="wrap flow-section">
           <div class="hero__panel">
             <p class="panel__title" id="flow-title">A conversation, end to end</p>
             <ol class="flow" aria-labelledby="flow-title">

@@ -145,6 +145,9 @@ h4 {
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.015em;
+  /* `balance` evens the line lengths, which shatters a short card heading into
+     three stacked fragments. `pretty` only fixes orphans. */
+  text-wrap: pretty;
 }
 
 h1 { font-size: var(--step-4); }
@@ -361,6 +364,14 @@ hr {
   color: var(--accent-on-deep);
 }
 
+/* Four abreast makes each card too narrow for its heading. Two-up gives the
+   headings a single line and suits the block's weight. */
+@media (min-width: 900px) {
+  .section--feature .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .section--feature :focus-visible {
   outline-color: var(--accent-on-deep);
 }
@@ -371,6 +382,32 @@ hr {
 }
 
 .section__head > * + * { margin-top: 0.85rem; }
+
+/* At width, a single narrow column of heading text leaves the right half of
+   every section empty. Set the heading against its lede instead, which uses the
+   measure and reads as deliberate rather than unfinished. */
+@media (min-width: 900px) {
+  .section__head {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 5vw, 4.5rem);
+    row-gap: 1rem;
+    align-items: end;
+  }
+
+  .section__head > * + * { margin-top: 0; }
+
+  .section__head .eyebrow { grid-column: 1 / -1; }
+
+  .section__head .lede { max-width: 46ch; }
+
+  /* Nothing to put in the second column, so don't open one. */
+  .section__head:not(:has(.lede)) {
+    display: block;
+    max-width: 60ch;
+  }
+}
 
 /* --- Buttons ------------------------------------------------------------- */
 

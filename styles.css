@@ -32,11 +32,20 @@
 
   --shadow: 0 1px 2px rgb(14 27 33 / 6%), 0 8px 24px -12px rgb(14 27 33 / 18%);
 
-  --radius: 10px;
-  --radius-lg: 16px;
+  /* Deep full-bleed blocks. Always paired with --on-deep text. */
+  --deep: #0d3b40;
+  --deep-raised: #14494f;
+  --deep-border: #235a60;
+  --on-deep: #ffffff;
+  --on-deep-muted: #b9d4d6;
+  --accent-on-deep: #7fd8ce;
+
+  --radius: 14px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
 
   --measure: 68ch;
-  --page: 1120px;
+  --page: 1200px;
   --gutter: clamp(1.25rem, 5vw, 2.5rem);
 
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
@@ -77,6 +86,15 @@
     --stop-border: #3f2122;
 
     --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px -12px rgb(0 0 0 / 70%);
+
+    /* Lifted, not deepened: #0d3b40 sits too close to the dark page background
+       to read as a distinct block. */
+    --deep: #10474e;
+    --deep-raised: #17565d;
+    --deep-border: #2a6b72;
+    --on-deep: #f2f8f8;
+    --on-deep-muted: #a9c7ca;
+    --accent-on-deep: #7fd8ce;
   }
 }
 
@@ -104,15 +122,29 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Display type is light and tightly led — that pairing is what reads as modern.
+   Card and UI headings stay heavier, because 430 at 18px reads as weak rather
+   than editorial. */
 h1,
 h2,
 h3,
 h4 {
   margin: 0;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.022em;
   text-wrap: balance;
-  font-weight: 650;
+}
+
+h1,
+h2 {
+  font-weight: 430;
+  line-height: 1.03;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
 }
 
 h1 { font-size: var(--step-4); }
@@ -287,6 +319,52 @@ hr {
   border-block: 1px solid var(--border);
 }
 
+/* Deep, inset, rounded block — the one section allowed to be loud. Inset by the
+   gutter rather than full-bleed, so the corner radius is actually visible. */
+.section--feature {
+  margin-inline: var(--gutter);
+  /* Without vertical separation an inset block reads as a full-bleed stripe and
+     the corner radius stops doing any work. */
+  margin-block: clamp(1.5rem, 4vw, 3rem);
+  border-radius: var(--radius-lg);
+  background: var(--deep);
+  color: var(--on-deep);
+}
+
+.section--feature h2,
+.section--feature h3,
+.section--feature .callout__title {
+  color: var(--on-deep);
+}
+
+.section--feature .eyebrow {
+  color: var(--accent-on-deep);
+}
+
+.section--feature .lede,
+.section--feature .card p,
+.section--feature .callout p {
+  color: var(--on-deep-muted);
+}
+
+.section--feature .card,
+.section--feature .callout {
+  background: var(--deep-raised);
+  border-color: var(--deep-border);
+}
+
+.section--feature .callout {
+  border-left-color: var(--accent-on-deep);
+}
+
+.section--feature a {
+  color: var(--accent-on-deep);
+}
+
+.section--feature :focus-visible {
+  outline-color: var(--accent-on-deep);
+}
+
 .section__head {
   max-width: 60ch;
   margin-bottom: clamp(2rem, 4vw, 3rem);
@@ -301,10 +379,10 @@ hr {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.8rem 1.4rem;
-  min-height: 48px;
+  padding: 0.95rem 1.75rem;
+  min-height: 54px;
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   font: inherit;
   font-weight: 600;
   text-decoration: none;

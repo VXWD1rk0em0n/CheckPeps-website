@@ -50,9 +50,11 @@
 
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --step-1: clamp(1.125rem, 1.06rem + 0.3vw, 1.25rem);
-  --step-2: clamp(1.375rem, 1.25rem + 0.6vw, 1.75rem);
-  --step-3: clamp(1.75rem, 1.5rem + 1.2vw, 2.5rem);
-  --step-4: clamp(2.125rem, 1.6rem + 2.4vw, 3.5rem);
+  --step-2: clamp(1.375rem, 1.25rem + 0.7vw, 1.9rem);
+  /* Section headings run nearly as large as the h1 — that near-parity is a big
+     part of the editorial feel, and 40px was reading as a subhead. */
+  --step-3: clamp(1.9rem, 1.4rem + 2.2vw, 3.25rem);
+  --step-4: clamp(2.25rem, 1.5rem + 3.2vw, 4rem);
 
   --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
@@ -313,8 +315,10 @@ hr {
 
 .muted { color: var(--text-muted); }
 
+/* Generous by design. Compact sections are what made this read as a document
+   rather than a site; each block should own the screen it sits on. */
 .section {
-  padding-block: clamp(3.5rem, 8vw, 6rem);
+  padding-block: clamp(4.5rem, 11vw, 9rem);
 }
 
 .section--subtle {
@@ -458,14 +462,39 @@ hr {
 
 /* --- Header -------------------------------------------------------------- */
 
+/* Dark chrome throughout, so the header reads as part of the masthead on the
+   home page and as deliberate site furniture everywhere else. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  background: color-mix(in srgb, var(--deep) 90%, transparent);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--deep-border);
+  color: var(--on-deep);
 }
+
+.site-header .brand,
+.site-header .brand:hover { color: var(--on-deep); }
+
+.site-header .nav__link { color: var(--on-deep-muted); }
+
+.site-header .nav__link:hover {
+  color: var(--on-deep);
+  background: color-mix(in srgb, var(--on-deep) 10%, transparent);
+}
+
+.site-header .nav__link[aria-current="page"] {
+  color: var(--deep);
+  background: var(--accent-on-deep);
+}
+
+.site-header .nav__toggle {
+  color: var(--on-deep);
+  border-color: color-mix(in srgb, var(--on-deep) 40%, transparent);
+}
+
+.site-header :focus-visible { outline-color: var(--accent-on-deep); }
 
 .site-header__inner {
   display: flex;
@@ -550,8 +579,8 @@ hr {
     position: absolute;
     inset-inline: 0;
     top: 100%;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
+    background: var(--deep);
+    border-bottom: 1px solid var(--deep-border);
     box-shadow: var(--shadow);
     padding: 0.5rem var(--gutter) 1rem;
   }
@@ -572,8 +601,103 @@ hr {
 
 /* --- Hero ---------------------------------------------------------------- */
 
+/* The masthead is one continuous deep field, header included, so the opening
+   screen reads as an immersive block rather than a document header over paper.
+   White-on-deep is the single biggest reason an editorial site feels editorial. */
 .hero {
-  padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2.5rem, 5vw, 4rem);
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(4rem, 9vw, 8rem) clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
+  background: var(--deep);
+  color: var(--on-deep);
+}
+
+.hero .lede,
+.hero .boundaries__label,
+.hero .flow__desc,
+.hero .panel__title {
+  color: var(--on-deep-muted);
+}
+
+.hero .eyebrow { color: var(--accent-on-deep); }
+
+.hero .boundaries { border-top-color: var(--deep-border); }
+
+/* Panel lifts off the field rather than sitting on paper. */
+.hero .hero__panel {
+  background: var(--deep-raised);
+  border-color: var(--deep-border);
+  box-shadow: none;
+}
+
+.hero .flow__name { color: var(--on-deep); }
+
+.hero .flow__num {
+  background: transparent;
+  border-color: var(--accent-on-deep);
+  color: var(--accent-on-deep);
+}
+
+.hero .flow__step--terminal .flow__num {
+  background: var(--accent-on-deep);
+  color: var(--deep);
+}
+
+.hero .flow__step:not(:last-child)::before { background: var(--deep-border); }
+
+/* Boundary chips need a light red to clear contrast on the deep field. */
+.hero .chip {
+  background: color-mix(in srgb, #ffb3b3 12%, transparent);
+  border-color: color-mix(in srgb, #ffb3b3 38%, transparent);
+  color: #ffb3b3;
+}
+
+/* Inverted buttons: a teal fill would sit too close to the field behind it. */
+.hero .btn--primary {
+  background: var(--on-deep);
+  color: var(--deep);
+}
+
+.hero .btn--primary:hover {
+  background: var(--accent-on-deep);
+  color: var(--deep);
+}
+
+.hero .btn--secondary {
+  color: var(--on-deep);
+  border-color: color-mix(in srgb, var(--on-deep) 45%, transparent);
+}
+
+.hero .btn--secondary:hover {
+  background: color-mix(in srgb, var(--on-deep) 12%, transparent);
+  color: var(--on-deep);
+  border-color: var(--on-deep);
+}
+
+.hero :focus-visible { outline-color: var(--accent-on-deep); }
+
+/* Stands in for the photography an editorial site would open with: a soft field
+   of brand colour so the first screen is not flat white. If real art arrives,
+   this is the layer it replaces. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -30% -15% auto -15%;
+  height: 150%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      55% 55% at 18% 12%,
+      color-mix(in srgb, var(--accent-on-deep) 20%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      50% 50% at 90% 6%,
+      color-mix(in srgb, var(--accent-on-deep) 11%, transparent),
+      transparent 66%
+    );
 }
 
 .hero__grid {
@@ -597,7 +721,9 @@ hr {
 
 .hero h1 span { display: block; }
 
-.hero h1 span + span { color: var(--accent); }
+/* On the deep masthead this must be the light mint, not the dark brand teal —
+   #0f6b6b on #0d3b40 is very nearly invisible. */
+.hero h1 span + span { color: var(--accent-on-deep); }
 
 .hero .btn-row { margin-top: 1.75rem; }
 

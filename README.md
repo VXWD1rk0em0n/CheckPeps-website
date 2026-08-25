@@ -97,7 +97,7 @@ All are marked in the page with `[CONTENT PENDING TEAM REVIEW]`.
 | `safety.html` | Escalation-condition list and referral wording; emergency guidance and region-specific contacts; regulatory-status statement |
 | `medical-disclaimer.html` | All 8 formal sections |
 | `privacy.html` | All 11 sections |
-| `terms.html` | All 13 sections |
+| `terms.html` | Drafted 2026-08-24, pending legal review. Remaining tokens: legal entity, effective date, venue county, contact details, region-specific emergency guidance |
 | `data-practices.html` | All 10 sections |
 
 ## Claim boundaries this site holds

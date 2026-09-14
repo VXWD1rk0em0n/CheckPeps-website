@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Privacy Policy (pending review) — CheckPeps</title>
-    <meta name="description" content="The CheckPeps Privacy Policy explains how we handle data and user privacy." />
+    <meta name="description" content="CheckPeps Privacy Policy draft framework. Educational and wellness context awaiting legal review." />
     <meta name="robots" content="noindex, follow" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -75,7 +75,7 @@
         <div class="wrap">
           <p class="breadcrumb"><a href="/">Home</a> &rsaquo; Privacy policy</p>
           <h1>Privacy Policy</h1>
-          <p class="lede">A complete draft, awaiting legal review. Not yet in force.</p>
+          <p class="lede">Draft framework. Not reviewed by counsel, and not in force.</p>
         </div>
       </div>
 
@@ -84,45 +84,170 @@
           <h2 class="visually-hidden" id="doc-heading">Privacy Policy</h2>
 
           <div class="callout callout--pending">
-            <p class="callout__title">Draft Policy</p>
+            <p class="callout__title">Attorney Review Required</p>
             <p>
-              This Privacy Policy describes how CheckPeps handles information when you visit this website or interact with our educational tools.
+              This draft is a starting framework only. It has not been reviewed by licensed counsel,
+              does not constitute legal advice, and must be reviewed against actual data flows,
+              vendor contracts, and the specific states and countries of operation before publication.
             </p>
           </div>
 
-          <p class="doc__meta">Status: complete draft, pending legal review &middot; Version: 1.0-draft</p>
+          <p class="doc__meta">Status: draft framework &middot; Effective date: <span class="pending-tag">[INSERT DATE]</span> &middot; Last updated: <span class="pending-tag">[INSERT DATE]</span></p>
 
-          <h3>1. Age Restriction (Strictly 21+)</h3>
+          <h3>1. Scope and Applicability</h3>
           <p>
-            CheckPeps is strictly intended for individuals who are <strong>twenty-one (21) years of age or older</strong>. We do not intentionally collect, solicit, or maintain personal data from anyone under the age of 21. If we discover that an individual under 21 has provided information, it will be deleted immediately.
+            This Policy applies to CheckPeps&rsquo; wellness/fitness monitoring application, connected tools, and related educational services (the &ldquo;Service&rdquo;). It is drafted to align with:
           </p>
+          <ul>
+            <li><strong>FTC Act § 5:</strong> Unfair/deceptive practices — governs accuracy of privacy representations.</li>
+            <li><strong>COPPA (Children’s Online Privacy Protection Act, 15 U.S.C. §§ 6501–6506):</strong> The Service is strictly not directed to anyone under 21, and child accounts are strictly blocked.</li>
+            <li><strong>CAN-SPAM Act:</strong> Standards governing marketing and informational communications.</li>
+            <li><strong>FCRA (Fair Credit Reporting Act):</strong> Service outputs are not used for credit, employment, or insurance eligibility determinations.</li>
+            <li><strong>GINA (Genetic Information Nondiscrimination Act):</strong> Relevant to wellness integrations and genetic/health data restrictions.</li>
+            <li><strong>State Comprehensive Privacy Laws:</strong> Reference standards under CCPA/CPRA, VCDPA, CPA, CTDPA, UCPA, and others.</li>
+            <li><strong>State Biometric Privacy Statutes:</strong> Protections regarding biometric identifiers and physiological telemetry data.</li>
+          </ul>
+
+          <div class="callout callout--pending">
+            <p class="callout__title">HIPAA &amp; FDA Notes</p>
+            <p>
+              <strong>HIPAA:</strong> CheckPeps does not collect medical/health records as a HIPAA Covered Entity or Business Associate. If integrations with healthcare providers or insurance plans occur, HIPAA applicability will be formally reviewed.
+            </p>
+            <p>
+              <strong>FDA:</strong> The Service does not make diagnostic, disease-prevention, or treatment claims and does not qualify as a medical device under FDA Software as a Medical Device (SaMD) frameworks. Language is strictly limited to general wellness and educational context.
+            </p>
+          </div>
 
           <h3>2. Information We Collect</h3>
+          <table class="table" style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border, #334155); text-align: left;">
+                <th style="padding: 10px;">Category</th>
+                <th style="padding: 10px;">Examples</th>
+                <th style="padding: 10px;">Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border, #334155);">
+                <td style="padding: 10px;"><strong>Account Data</strong></td>
+                <td style="padding: 10px;">Name, email, password hash, phone</td>
+                <td style="padding: 10px;">User-provided</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border, #334155);">
+                <td style="padding: 10px;"><strong>Device/Telemetry Data</strong></td>
+                <td style="padding: 10px;">Steps, heart rate, sleep patterns, activity level</td>
+                <td style="padding: 10px;">Automatically via sensors/integrations</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border, #334155);">
+                <td style="padding: 10px;"><strong>Usage Data</strong></td>
+                <td style="padding: 10px;">App interactions, session logs, error telemetry</td>
+                <td style="padding: 10px;">Automatically</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border, #334155);">
+                <td style="padding: 10px;"><strong>Technical Data</strong></td>
+                <td style="padding: 10px;">IP address, device ID, browser/OS version</td>
+                <td style="padding: 10px;">Automatically</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border, #334155);">
+                <td style="padding: 10px;"><strong>Inferred Data</strong></td>
+                <td style="padding: 10px;">AI-generated wellness scores, trend predictions</td>
+                <td style="padding: 10px;">Derived by algorithms</td>
+              </tr>
+            </tbody>
+          </table>
           <p>
-            Currently, CheckPeps requires no user account, login, or personal profile. We do not ask for or store Protected Health Information (PHI), medical records, or prescriptions.
+            We classify all wearable and wellness metrics as <em>non-medical wellness data</em>. This data is not intended to diagnose, treat, cure, or prevent any disease.
           </p>
-          <ul>
-            <li><strong>Automated Logs:</strong> Like most websites, our hosting servers (e.g., Vercel) automatically collect basic technical logs (IP address, browser type, referring pages).</li>
-            <li><strong>Educational Queries:</strong> Any queries or interactions with our educational assistant are processed for informational responses and are not tied to personal medical identities.</li>
-          </ul>
 
           <h3>3. How We Use Information</h3>
-          <p>We use technical data solely to:</p>
           <ul>
-            <li>Maintain, secure, and improve the performance of our website.</li>
-            <li>Prevent abuse, prompt injection, scraping, or unauthorized access.</li>
-            <li>Comply with applicable legal and regulatory requirements.</li>
+            <li>Provide, maintain, and operate the educational service.</li>
+            <li>Generate wellness insights, trends, and automated scores.</li>
+            <li>Improve, tune, and secure underlying algorithmic models.</li>
+            <li>Provide customer support, fraud prevention, and security verification.</li>
+            <li>Deliver informational or marketing communications (with opt-out mechanisms).</li>
+            <li>Ensure legal compliance and enforcement of our Terms of Service.</li>
           </ul>
 
-          <h3>4. Third-Party Services</h3>
+          <h3>4. Automated Decision-Making &amp; AI Disclosure</h3>
           <p>
-            We may use trusted infrastructure providers (such as hosting and CDN services) that process data only as necessary to deliver the website. We do not sell, rent, or monetize your data.
+            CheckPeps uses automated models and machine learning to generate outputs (e.g., wellness indicators, informational mapping, category suggestions) without manual human review prior to presentation.
+          </p>
+          <ul>
+            <li><strong>Logic Involved:</strong> Generalized inputs (metrics provided by you, goal selections, usage patterns). No proprietary core model weights are shared.</li>
+            <li><strong>Consequence:</strong> All outputs are for self-informational and educational purposes only. They are not used to make adverse decisions regarding credit, healthcare, or employment.</li>
+            <li><strong>User Controls:</strong> Users have the right to request human review or dispute automated profiling where required under applicable state laws.</li>
+          </ul>
+
+          <h3>5. Legal Basis &amp; Consent Model</h3>
+          <p>Consent is obtained through:</p>
+          <ul>
+            <li>Clickwrap acceptance of this Policy and the Terms of Service.</li>
+            <li>Operating-system level granular permission prompts (sensors, device storage).</li>
+            <li>Opt-in mechanisms for any direct marketing communications.</li>
+          </ul>
+
+          <h3>6. Sharing and Disclosure</h3>
+          <p>
+            <strong>We do not sell wellness data.</strong> We may share data only with:
+          </p>
+          <ul>
+            <li><strong>Service Providers &amp; Processors:</strong> Cloud hosting, telemetry, and analytics under strict confidentiality contracts.</li>
+            <li><strong>Legal Authorities:</strong> When required by subpoena, court order, or applicable law to protect life and safety.</li>
+            <li><strong>Business Transfers:</strong> In connection with any merger, sale, or transfer of company assets.</li>
+          </ul>
+
+          <h3>7. Data Retention</h3>
+          <p>
+            Data is retained for <span class="pending-tag">[X months/years]</span> or until account deletion is requested, except where longer retention is mandated for legal, compliance, or security purposes.
           </p>
 
-          <h3>5. Contact Us</h3>
+          <h3>8. Security</h3>
           <p>
-            For questions regarding this policy, contact us at: <a href="mailto:support@checkpeps.com">support@checkpeps.com</a>.
+            We implement administrative, technical, and physical safeguards appropriate to the sensitivity of wellness data, including encryption in transit (TLS) and at rest, principle-of-least-privilege access controls, and active incident monitoring. No system is 100% immune to vulnerabilities.
           </p>
+
+          <h3>9. Your Privacy Rights</h3>
+          <p>Depending on your jurisdiction and state of residence, you may possess the right to:</p>
+          <ul>
+            <li>Access the specific pieces of personal data we maintain about you.</li>
+            <li>Request correction of inaccurate information.</li>
+            <li>Request deletion of your data.</li>
+            <li>Opt out of automated profiling or request human review.</li>
+            <li>Request data portability.</li>
+          </ul>
+
+          <h3>10. Age Restriction &amp; Minors (Strictly 21+)</h3>
+          <p>
+            <strong>CheckPeps is strictly restricted to individuals twenty-one (21) years of age or older.</strong> We do not knowingly permit access to, or collect data from, anyone under 21. In compliance with COPPA and youth protection regulations, if we learn that any user is under 21, their account and associated data will be expunged immediately.
+          </p>
+
+          <h3>11. International Users</h3>
+          <p>
+            The Service is hosted and operated in the United States. If you access the Service from other jurisdictions, your information will be transferred to and processed within the United States.
+          </p>
+
+          <h3>12. Changes to this Policy</h3>
+          <p>
+            Material updates will be accompanied by prominent notification on the site or via direct communication at least 30 days prior to taking effect, updating the effective date above.
+          </p>
+
+          <h3>13. Contact Information</h3>
+          <ul>
+            <li><strong>Entity:</strong> CheckPeps, Inc.</li>
+            <li><strong>Email:</strong> <a href="mailto:privacy@checkpeps.com">privacy@checkpeps.com</a></li>
+            <li><strong>Address:</strong> <span class="pending-tag">[Insert Business Address]</span></li>
+          </ul>
+
+          <div class="callout callout--pending" style="margin-top: 40px;">
+            <p class="callout__title">Open Items for Counsel Review</p>
+            <ul style="margin: 0; padding-left: 20px;">
+              <li>Confirm wellness/biometric data classification under applicable state sensitive data rules.</li>
+              <li>Confirm B2B/employer integration status (GINA, FCRA, ADA implications).</li>
+              <li>Review human-review and appeal workflows for automated outputs.</li>
+              <li>Confirm state revenue/volume thresholds (CCPA/CPRA, VCDPA, CPA).</li>
+            </ul>
+          </div>
         </div>
       </section>
     </main>

@@ -298,6 +298,18 @@ hr {
 .prose h3 { margin-top: 1.8em; }
 .prose li + li { margin-top: 0.4em; }
 
+/* `.wrap.prose` collapsed the container itself to the measure and then centred
+   it, so body copy floated mid-page while the page-head above stayed left
+   aligned at the gutter. Keep the wrap's box and cap the children instead, so
+   both share a left edge. */
+.wrap.prose {
+  max-width: var(--page);
+}
+
+.wrap.prose > * {
+  max-width: var(--measure);
+}
+
 .eyebrow {
   font-size: 0.8125rem;
   font-weight: 650;

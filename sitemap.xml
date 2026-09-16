@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Only indexable pages are listed. The privacy, terms, and data-practices
-  placeholders are noindex until the CheckPeps team publishes final text; add
-  them here at the same time the noindex tags come off.
+  Only indexable pages are listed. The privacy, terms, data-practices, and
+  medical-disclaimer pages are noindex until the CheckPeps team publishes final
+  text; add them here at the same time the noindex tags come off.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://checkpeps.com/</loc>
+    <loc>https://www.checkpeps.us/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://checkpeps.com/how-it-works.html</loc>
+    <loc>https://www.checkpeps.us/how-it-works.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://checkpeps.com/safety.html</loc>
+    <loc>https://www.checkpeps.us/safety.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://checkpeps.com/medical-disclaimer.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
 </urlset>

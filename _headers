@@ -1,6 +1,9 @@
 # Netlify / Cloudflare Pages `_headers` format.
 # For nginx, Apache, or a CDN, translate the same values — see README.md.
 #
+# Vercel ignores this file. The same values are duplicated in `vercel.json`,
+# which is what the current deployment actually serves. Change both together.
+#
 # The CSP is deliberately strict because the site genuinely needs nothing
 # external: no CDN, no web fonts, no analytics, no XHR. If a header here starts
 # blocking something, that means a third-party dependency was added and should

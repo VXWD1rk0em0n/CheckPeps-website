@@ -1273,6 +1273,57 @@ hr {
 
 /* --- Print --------------------------------------------------------------- */
 
+/* --- Data table ---------------------------------------------------------- */
+/* Used by the policy pages. Cell padding and rules live here rather than on
+   each `<td>` because the CSP blocks inline `style` attributes: `style-src
+   'self'` rejects them exactly as it rejects a `<style>` block. */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table thead tr {
+  border-bottom: 2px solid var(--border-strong);
+  text-align: left;
+}
+
+.table tbody tr { border-bottom: 1px solid var(--border); }
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* --- Stop callout -------------------------------------------------------- */
+/* The hard-boundary variant of `.callout`. Previously written inline against
+   `var(--danger, ...)`, a token this stylesheet never defined, so it always
+   resolved to the hard-coded fallback and stayed dark-red in light mode. */
+
+.callout--stop {
+  border-left: 4px solid var(--stop);
+  background: var(--stop-subtle);
+  margin: 24px 0;
+  padding: 16px 20px;
+}
+
+.callout--stop .callout__title { color: var(--stop); }
+
+/* --- Utilities ----------------------------------------------------------- */
+/* Spacing one-offs that would otherwise be inline `style` attributes. Keep this
+   list short; a third use of any of these is a sign it wants a real class. */
+
+.u-mt-sm { margin-top: 1rem; }
+.u-mt-md { margin-top: 1.75rem; }
+.u-mt-lg { margin-top: 2rem; }
+.u-mt-xl { margin-top: 40px; }
+.u-m-0 { margin: 0; }
+.u-mi-auto { margin-inline: auto; }
+.u-ta-left { text-align: left; }
+.u-list-flush { margin: 0; padding-left: 20px; }
+
 @media print {
   .site-header,
   .nav__toggle,

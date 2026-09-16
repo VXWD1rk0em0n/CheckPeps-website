@@ -40,6 +40,8 @@ If you add a dependency, re-run the checks in "Verification" below.
 | `styles.css` | All styles, light + dark via `prefers-color-scheme` |
 | `main.js` | Mobile nav toggle. The only script. |
 | `_headers` | CSP + security headers (Netlify/Cloudflare format) |
+| `vercel.json` | The same headers in Vercel's format — Vercel ignores `_headers` |
+| `terms.css` | Styles for `terms.html` only, which predates `styles.css` |
 | `robots.txt`, `sitemap.xml`, `site.webmanifest` | Crawl + install metadata |
 | `favicon.svg`, `apple-touch-icon.png`, `og-image.png` | Icons and social card |
 
@@ -65,13 +67,21 @@ a screenshot, because text antialiasing contaminates pixel sampling.
 
 ## Before you deploy
 
-1. **Replace the placeholder domain.** Every canonical, `og:url`, sitemap entry,
-   and `robots.txt` sitemap line uses `https://checkpeps.com`. If that is not the
-   production origin:
+1. **The production origin is `https://www.checkpeps.us`.** Every canonical,
+   `og:url`, `og:image`, JSON-LD `url`, sitemap entry, and the `robots.txt`
+   sitemap line points there. The apex `checkpeps.us` issues a 308 to `www`, so
+   these use `www` directly rather than sending crawlers through a redirect. To
+   move the site again:
 
    ```bash
-   grep -rl "checkpeps.com" . | xargs sed -i "s|https://checkpeps.com|https://YOUR-DOMAIN|g"
+   grep -rl "www.checkpeps.us" . | xargs sed -i "s|https://www.checkpeps.us|https://YOUR-DOMAIN|g"
    ```
+
+   One address is deliberately excluded from that swap: `support@checkpeps.com`
+   in `data-practices.html`. It is a mailbox rather than an origin, and
+   `checkpeps.com` is not a domain this project controls — it resolves nowhere
+   and has no MX record, so security inquiries sent there are lost. Point it at
+   a mailbox that exists before launch.
 
 2. **Translate `_headers`** if you are not on Netlify or Cloudflare Pages. The
    CSP is `default-src 'none'` with `'self'` for script/style/img/font — no
@@ -144,6 +154,20 @@ grep -rniE "api[_-]?key|secret|password|token|bearer |sk-[A-Za-z0-9]{12,}|AKIA[0
 
 Must return nothing.
 
+```bash
+grep -rnoE 'style="|<style' --include="*.html" .
+```
+
+Must return nothing. The CSP sets `style-src 'self'`, which blocks inline
+`<style>` blocks *and* inline `style` attributes alike. A hit here renders
+unstyled in production even though it looks correct on a local server that
+sends no CSP headers. Serve the site with the header applied before trusting a
+visual check:
+
+```bash
+python -m http.server 4321 --directory .   # no CSP — will not catch this
+```
+
 In-browser checks performed, all 8 pages, light **and** dark:
 
 - 538 text elements, **0 WCAG AA contrast failures**
@@ -162,9 +186,13 @@ In-browser checks performed, all 8 pages, light **and** dark:
 
 ## Known gaps
 
-- **No visual screenshot review was possible** in the environment this was built
-  in — the browser pane could not composite frames, so verification was done
-  through the DOM, the CSSOM, computed styles, and the accessibility tree rather
-  than by eye. Look at it on a real screen before launch.
+- **`terms.html` predates the design system.** It is the one page not built on
+  `styles.css` — it carries its own `terms.css`, its own colour scheme, a "Back
+  to CheckPeps" link instead of the shared header and footer, and a stale
+  "Last Updated: October 2024" line. Rebuild it on `styles.css` when the final
+  legal text lands, and drop `terms.css` at that point.
+- **The home page has been reviewed on a real screen; the other 7 pages have
+  not.** Earlier verification was done through the DOM, the CSSOM, computed
+  styles, and the accessibility tree. Look at the rest before launch.
 - Page chrome (header/footer) is duplicated across 8 files. That is the cost of
   having no build step. If the site grows past ~10 pages, revisit.

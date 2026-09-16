@@ -8,4 +8,4 @@ Disallow: /privacy.html
 Disallow: /terms.html
 Disallow: /data-practices.html
 
-Sitemap: https://checkpeps.com/sitemap.xml
+Sitemap: https://www.checkpeps.us/sitemap.xml

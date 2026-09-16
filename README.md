@@ -67,13 +67,21 @@ a screenshot, because text antialiasing contaminates pixel sampling.
 
 ## Before you deploy
 
-1. **Replace the placeholder domain.** Every canonical, `og:url`, sitemap entry,
-   and `robots.txt` sitemap line uses `https://checkpeps.com`. If that is not the
-   production origin:
+1. **The production origin is `https://www.checkpeps.us`.** Every canonical,
+   `og:url`, `og:image`, JSON-LD `url`, sitemap entry, and the `robots.txt`
+   sitemap line points there. The apex `checkpeps.us` issues a 308 to `www`, so
+   these use `www` directly rather than sending crawlers through a redirect. To
+   move the site again:
 
    ```bash
-   grep -rl "checkpeps.com" . | xargs sed -i "s|https://checkpeps.com|https://YOUR-DOMAIN|g"
+   grep -rl "www.checkpeps.us" . | xargs sed -i "s|https://www.checkpeps.us|https://YOUR-DOMAIN|g"
    ```
+
+   One address is deliberately excluded from that swap: `support@checkpeps.com`
+   in `data-practices.html`. It is a mailbox rather than an origin, and
+   `checkpeps.com` is not a domain this project controls — it resolves nowhere
+   and has no MX record, so security inquiries sent there are lost. Point it at
+   a mailbox that exists before launch.
 
 2. **Translate `_headers`** if you are not on Netlify or Cloudflare Pages. The
    CSP is `default-src 'none'` with `'self'` for script/style/img/font — no

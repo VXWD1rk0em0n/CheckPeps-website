@@ -205,21 +205,28 @@ grep -rniE "api[_-]?key|secret|password|token|bearer |sk-[A-Za-z0-9]{12,}|AKIA[0
 
 Must return nothing.
 
-In-browser checks performed, all 8 pages, light **and** dark:
+In-browser checks performed, all 8 pages, light **and** dark, after the visual
+refresh and the revised legal pages were combined:
 
-- 551 text elements, **0 WCAG AA contrast failures** (re-run after the visual
-  refresh)
+- 581 text elements. **No contrast failures come from `styles.css`.** Two come
+  from page-specific styles and should be fixed in those pages:
+  `medical-disclaimer.html` "Emergency Notice" (inline `#f87171` on the light
+  page, 2.56:1) and the `terms.html` "Strictly 21+ Only" badge (4.27:1)
 - Exactly one `<h1>` per page, **no skipped heading levels**
 - 0 images without `alt`, 0 accessibility-exposed unlabelled SVGs, 0 empty links
-- 0 inline event handlers, 0 inline scripts, 0 inline `style` attributes in the
-  markup, 0 cross-origin resources
+- 0 inline event handlers, 0 inline scripts, 0 cross-origin resources
+- 0 inline `style` attributes on home, how-it-works, safety, data practices, and
+  404. `privacy.html` (27) and `medical-disclaimer.html` (3) carry inline
+  styles, and `terms.html` is a standalone page with its own `<style>` block and
+  no `styles.css`; the CSP in `_headers` would block all of those
 - 0 forms, 0 inputs
-- No horizontal overflow across all 8 pages at 320, 375, 414, 600, 768, 899,
-  900, 1024, 1280, 1440, and 1920px; all tap targets ≥ 24px at 375px
-  (WCAG 2.2 SC 2.5.8)
-- WCAG 1.4.12 text spacing: no clipping or overflow with line-height 1.5,
-  letter-spacing 0.12em, word-spacing 0.16em, paragraph spacing 2em, across all
-  8 pages at 320, 375, and 1280px
+- No horizontal overflow at 320, 375, 414, 600, 768, 899, 900, 1024, 1280, 1440,
+  and 1920px on every page except `privacy.html`, whose table is wider than the
+  viewport at 414px and below (also true of the live site before this work);
+  all tap targets ≥ 24px at 375px (WCAG 2.2 SC 2.5.8)
+- WCAG 1.4.12 text spacing: no clipping with line-height 1.5, letter-spacing
+  0.12em, word-spacing 0.16em, paragraph spacing 2em, on all 8 pages at 320,
+  375, and 1280px; no overflow beyond the `privacy.html` table above
 - Windows High Contrast supported via `@media (forced-colors: active)` — controls
   whose meaning was carried by a background fill keep an explicit border
 - Nav toggle: opens, closes, closes on `Escape` with focus returned, closes on

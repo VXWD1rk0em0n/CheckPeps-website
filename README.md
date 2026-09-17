@@ -15,7 +15,7 @@ leaked key, or an unreviewed claim to appear. So the site has none:
 
 - **4 requests** to render the home page (HTML + CSS + JS + the hero art), all
   same-origin. Inner pages are 3 — they have no hero image.
-- **14 KB gzipped** of text, plus the hero art: 32 KB at `hero-1200.jpg` or
+- **21 KB gzipped** of text, plus the hero art: 32 KB at `hero-1200.jpg` or
   82 KB at `hero.jpg`, chosen by `srcset` from the viewport.
 - **No web fonts** — system font stack only.
 - **One raster image on the home page**: the hero art, in two `srcset` widths.
@@ -38,7 +38,7 @@ If you add a dependency, re-run the checks in "Verification" below.
 | `privacy.html`, `terms.html`, `data-practices.html` | Placeholders, `noindex` |
 | `404.html` | Not-found page |
 | `styles.css` | All styles, light + dark via `prefers-color-scheme` |
-| `main.js` | Mobile nav toggle. The only script. |
+| `main.js` | Mobile nav toggle and the motion layer (see "Motion"). The only script. |
 | `_headers` | CSP + security headers (Netlify/Cloudflare format) |
 | `robots.txt`, `sitemap.xml`, `site.webmanifest` | Crawl + install metadata |
 | `favicon.svg`, `apple-touch-icon.png`, `og-image.png` | Icons and social card |
@@ -62,6 +62,37 @@ things must hold or the hero breaks:
 
 After any swap, re-check contrast against the composited backdrop — not against
 a screenshot, because text antialiasing contaminates pixel sampling.
+
+## Motion
+
+The home page tells its story as you scroll. The masthead copy rises in on load
+and lifts away as you leave it; the five-step flow fills a trail and lights each
+step as you read down it; the safety statement pins while its words come up in
+reading order; sections ease in as they arrive; cards lean toward a mouse
+pointer; the footer ends on a low brand glow. The inner pages pick up the
+reveals, the card light, and the glow.
+
+It follows the same rules as the rest of the site: no dependency, no network, no
+storage, no inline styles or scripts. `main.js` only toggles classes and writes
+CSS custom properties through the CSSOM, which the CSP allows.
+
+What keeps it safe to have:
+
+- **Optional by construction.** Every hidden starting state is scoped under
+  `html.motion`, which `main.js` adds itself. No JS, no hidden content.
+- **`prefers-reduced-motion: reduce`** turns all of it off, including when the
+  setting changes mid-visit.
+- **`prefers-contrast: more` and forced colours** get the statement as plain
+  full-strength text, with no dimmed words, and none of the decorative trail,
+  light, or glow.
+- **Print** shows every block at full strength.
+- **Only opacity and transforms animate.** Scroll work runs at most once per
+  animation frame, reads before writes, and only for scenes near the viewport.
+- **Keyboard focus** reveals a block immediately, before it has scrolled in.
+
+To remove it, delete the second function in `main.js` and the "Scroll
+storytelling" block at the end of `styles.css`. The statement markup in
+`index.html` reads as ordinary static text without them.
 
 ## Before you deploy
 
@@ -160,6 +191,25 @@ In-browser checks performed, all 8 pages, light **and** dark:
 - Nav toggle: opens, closes, closes on `Escape` with focus returned, closes on
   link activation
 
+Motion layer, checked in-browser in light **and** dark, with screenshots of every
+effect at 1280px and of the hero, flow, and statement at 375px:
+
+- Contrast of the text states it introduces: statement 12.2:1 (dark 9.6:1); its
+  mint phrase and eyebrow 7.35:1 (dark 6.2:1); flow numbers unlit 6.97:1
+  (dark 7.2:1) and lit 6.3:1 (dark 8.45:1)
+- No horizontal overflow at 320px on the home, how-it-works, safety, medical
+  disclaimer, and 404 pages, at 375px and 1280px on the home page, or at 1920px
+  on how-it-works
+- One `<h1>` per page and the heading order unchanged
+- Removing `html.motion` leaves 0 hidden or dimmed elements
+- Tabbing to a block that has not scrolled in reveals it immediately
+- No transitions fire on load; the only load animations are the hero intro
+- 0 console errors
+
+Run contrast audits with reduced motion emulated, or after scrolling to the end
+of the page: blocks that have not revealed yet sit at opacity 0 and read as
+failures.
+
 ## Known gaps
 
 - **No visual screenshot review was possible** in the environment this was built
@@ -168,3 +218,6 @@ In-browser checks performed, all 8 pages, light **and** dark:
   than by eye. Look at it on a real screen before launch.
 - Page chrome (header/footer) is duplicated across 8 files. That is the cost of
   having no build step. If the site grows past ~10 pages, revisit.
+- The motion layer's reduced-motion, increased-contrast, and forced-colours paths
+  were verified by reading the gates and by removing `html.motion` in the
+  browser, not by emulating those OS settings. It was tested in Chromium only.

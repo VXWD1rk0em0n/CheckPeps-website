@@ -376,13 +376,20 @@
       <!-- ====================== WHY SAFETY DIFFERS ===================== -->
       <section class="section section--feature" aria-labelledby="safety-heading">
         <div class="wrap">
-          <div class="section__head">
-            <p class="eyebrow">Why the safety model is different</p>
-            <h2 id="safety-heading">The boundaries are built in, not asked for</h2>
-            <p class="lede">
-              Most assistants are told to be careful. CheckPeps is built so the careful
-              answer is the only one it can give.
-            </p>
+          <!-- The lede is set large as a statement. With motion allowed, main.js
+               turns this block into a scroll runway: the stage pins and the words
+               come up to full strength in reading order. Without JS, or with
+               reduced motion, increased contrast, or forced colors, it is simply
+               large static text. -->
+          <div class="statement">
+            <div class="statement__stage">
+              <p class="eyebrow">Why the safety model is different</p>
+              <h2 id="safety-heading">The boundaries are built in, not asked for</h2>
+              <p class="statement__text">
+                Most assistants are told to be careful. CheckPeps is built so
+                <span class="statement__key">the careful answer is the only one it can give.</span>
+              </p>
+            </div>
           </div>
 
           <div class="grid">

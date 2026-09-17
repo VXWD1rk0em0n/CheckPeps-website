@@ -1281,3 +1281,425 @@ hr {
 
   body { background: #fff; color: #000; }
 }
+
+/* ==========================================================================
+   Scroll storytelling
+   Pinned statement, flow trail, reveals, hero intro and exit, card light,
+   button arrow, footer glow. All of it is layered over a page that already
+   works without it, behind two gates:
+
+   - CSS-only effects (hero intro, button arrow) live inside
+     `prefers-reduced-motion: no-preference`.
+   - Scroll-driven effects hang off `.motion` on <html>, which main.js adds only
+     when motion is allowed. Every hidden starting state is scoped under it, so
+     a visitor without JS never meets invisible content.
+
+   Only opacity and transforms animate. main.js writes custom properties at
+   most once per frame, and only for scenes near the viewport.
+   ========================================================================== */
+
+:root {
+  /* .site-header__inner min-height plus its 1px border. */
+  --header-h: 65px;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* --- Statement (static baseline) ----------------------------------------- */
+
+.statement {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.statement__stage {
+  position: relative;
+}
+
+.statement__stage > * + * { margin-top: 0.85rem; }
+
+/* The statement is the loud line here, so the heading steps down a size and
+   hands it the stage. It is still the section's h2. */
+.statement__stage h2 {
+  max-width: 30ch;
+  font-size: var(--step-2);
+  font-weight: 560;
+  line-height: 1.2;
+}
+
+.statement__stage .statement__text {
+  margin-top: clamp(1.4rem, 3vw, 2.25rem);
+}
+
+.statement__text {
+  max-width: 22ch;
+  font-size: clamp(2rem, 1.2rem + 3.4vw, 4.25rem);
+  font-weight: 430;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--on-deep);
+  text-wrap: balance;
+}
+
+.statement__key { color: var(--accent-on-deep); }
+
+/* --- Hero intro (CSS only) ----------------------------------------------- */
+
+/* `backwards` fill, never `both`: holding the end state would let keyframe
+   values override the scroll-driven properties the hero picks up afterwards. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__media {
+    animation: cp-art-in 1600ms var(--ease-out) backwards;
+  }
+
+  .hero__copy > :not(h1),
+  .hero h1 > span,
+  .hero .chip {
+    animation: cp-rise 850ms var(--ease-out) backwards;
+  }
+
+  .hero h1 > span:nth-child(1) { animation-delay: 90ms; }
+  .hero h1 > span:nth-child(2) { animation-delay: 190ms; }
+  .hero__copy > .lede { animation-delay: 300ms; }
+  .hero__copy > .btn-row { animation-delay: 390ms; }
+  .hero__copy > .boundaries { animation-delay: 480ms; }
+  .hero .chip:nth-child(1) { animation-delay: 580ms; }
+  .hero .chip:nth-child(2) { animation-delay: 630ms; }
+  .hero .chip:nth-child(3) { animation-delay: 680ms; }
+  .hero .chip:nth-child(4) { animation-delay: 730ms; }
+  .hero .chip:nth-child(5) { animation-delay: 780ms; }
+}
+
+@keyframes cp-rise {
+  from {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+
+@keyframes cp-art-in {
+  from {
+    opacity: 0;
+    scale: 1.06;
+  }
+}
+
+/* --- Hero exit ------------------------------------------------------------ */
+
+/* main.js runs --hero-exit from 0 (at rest) to 1 (scrolled away). The art
+   trails the scroll. The copy lifts, and holds full strength until the hero is
+   half gone, so it never sits on screen at reduced contrast for long. */
+.motion .hero__media img {
+  translate: 0 calc(var(--hero-exit, 0) * 24%);
+}
+
+.motion .hero__grid {
+  translate: 0 calc(var(--hero-exit, 0) * -2.5rem);
+  opacity: clamp(0, calc(2.1 - var(--hero-exit, 0) * 2.3), 1);
+}
+
+/* --- Reveal on enter ------------------------------------------------------ */
+
+/* main.js tags targets `.reveal`, and tags the ones already on screen
+   `.is-revealed` in the same task, so nothing visible at load blinks out. */
+.motion .reveal {
+  transition:
+    opacity 760ms var(--ease-out) var(--reveal-delay, 0ms),
+    translate 760ms var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.motion .reveal:not(.is-revealed) {
+  opacity: 0;
+  translate: 0 1.75rem;
+}
+
+/* While main.js tags the page on load. Without it, anything already styled
+   once would transition out to its hidden or unreached state. */
+.motion-init .reveal,
+.motion-init .flow__num {
+  transition: none !important;
+}
+
+/* --- Statement runway ----------------------------------------------------- */
+
+/* The block becomes a tall runway and the stage pins below the header while
+   --statement-p runs 0 → 1. Each word carries its own start (--w) and comes up
+   from --statement-rest to full strength over a short window. */
+.motion .statement--live {
+  --statement-rest: 0.2;
+  --statement-gain: 6;
+  height: 200vh;
+  height: 200svh;
+}
+
+.motion .statement--live .statement__stage {
+  position: sticky;
+  top: var(--header-h);
+  display: grid;
+  align-content: center;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
+  padding-left: clamp(1.25rem, 3vw, 2.75rem);
+}
+
+.motion .statement--live .statement__word {
+  opacity: clamp(
+    var(--statement-rest),
+    calc(
+      var(--statement-rest) +
+        (var(--statement-p, 0) - var(--w, 0)) * var(--statement-gain)
+    ),
+    1
+  );
+}
+
+.statement__rail { display: none; }
+
+.motion .statement--live .statement__rail {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  /* Absolutely placed, so the stage's sibling spacing must not push it. */
+  margin: 0;
+  width: 2px;
+  height: min(62%, 30rem);
+  translate: 0 -50%;
+  border-radius: 2px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--on-deep) 16%, transparent);
+}
+
+.motion .statement--live .statement__rail > span {
+  display: block;
+  height: 100%;
+  background: var(--accent-on-deep);
+  transform-origin: 50% 0;
+  transform: scaleY(var(--statement-p, 0));
+}
+
+/* --- Flow trail ----------------------------------------------------------- */
+
+/* A fill runs down the step connectors as the reading line passes, and each
+   number lights as the fill reaches it. main.js injects the trail and sizes it
+   from the rendered numbers, so it follows any reflow. */
+.flow__trail { display: none; }
+
+.motion .flow-section .hero__panel { position: relative; }
+
+.motion .flow__trail {
+  display: block;
+  position: absolute;
+  z-index: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform-origin: 50% 0;
+  transform: scaleY(var(--flow-p, 0));
+  pointer-events: none;
+}
+
+.motion .flow__num {
+  transition:
+    background-color 360ms ease,
+    border-color 360ms ease,
+    color 360ms ease,
+    box-shadow 360ms ease;
+}
+
+.motion .flow__step:not(.is-reached) .flow__num {
+  background: var(--bg-raised);
+  border-color: var(--border-strong);
+  color: var(--text-muted);
+}
+
+.motion .flow__step.is-reached .flow__num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+/* --- Card light (hovering pointers only) ----------------------------------- */
+
+/* main.js adds `.tilt` only where a mouse or trackpad can hover. The card leans
+   a few degrees toward the pointer and a soft light follows it. The light sits
+   under the text, so contrast only ever moves by a faint tint. */
+.motion .tilt {
+  position: relative;
+  isolation: isolate;
+  transition:
+    opacity 760ms var(--ease-out) var(--reveal-delay, 0ms),
+    translate 760ms var(--ease-out) var(--reveal-delay, 0ms),
+    transform 520ms var(--ease-out),
+    box-shadow 320ms ease,
+    border-color 320ms ease;
+}
+
+.motion .tilt:hover {
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg)) translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+  transition-duration: 760ms, 760ms, 160ms, 320ms, 320ms;
+}
+
+.motion .tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    24rem circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    color-mix(in srgb, var(--accent) 13%, transparent),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 320ms ease;
+  pointer-events: none;
+}
+
+.motion .tilt:hover::after { opacity: 1; }
+
+.section--feature .tilt::after {
+  background: radial-gradient(
+    24rem circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    color-mix(in srgb, var(--accent-on-deep) 16%, transparent),
+    transparent 62%
+  );
+}
+
+.section--feature .tilt:hover {
+  border-color: color-mix(in srgb, var(--accent-on-deep) 45%, var(--deep-border));
+}
+
+/* --- Button arrow --------------------------------------------------------- */
+
+/* The arrow runs out through the right and back in from the left, once per
+   hover or focus: a nudge that something is ahead, not a loop. */
+@media (prefers-reduced-motion: no-preference) {
+  .btn:hover > svg,
+  .btn:focus-visible > svg {
+    animation: cp-arrow-through 560ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+}
+
+@keyframes cp-arrow-through {
+  0% {
+    translate: 0 0;
+    opacity: 1;
+  }
+
+  45% {
+    translate: 0.85em 0;
+    opacity: 0;
+  }
+
+  46% {
+    translate: -0.85em 0;
+    opacity: 0;
+  }
+
+  100% {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+/* --- Footer glow ---------------------------------------------------------- */
+
+/* A low brand-coloured glow rises in its own band beneath the footer content as
+   the page bottoms out (--footer-rise, 0 → 1). The band is extra padding, so the
+   glow never sits behind text and cannot touch its contrast. */
+.motion .site-footer {
+  --glow-band: clamp(4.5rem, 11vw, 8rem);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-bottom: calc(clamp(2.5rem, 5vw, 3.5rem) + var(--glow-band));
+}
+
+.motion .site-footer::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: -1;
+  height: var(--glow-band);
+  pointer-events: none;
+  transform-origin: 50% 100%;
+  transform: scaleY(calc(0.2 + var(--footer-rise, 0) * 0.8));
+  opacity: calc(0.25 + var(--footer-rise, 0) * 0.75);
+  background:
+    radial-gradient(
+      48% 130% at 16% 100%,
+      color-mix(in srgb, var(--accent) 34%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      42% 150% at 50% 100%,
+      color-mix(in srgb, var(--accent-on-deep) 40%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      48% 130% at 86% 100%,
+      color-mix(in srgb, var(--deep) 40%, transparent),
+      transparent 70%
+    );
+}
+
+/* --- Opt-outs ------------------------------------------------------------- */
+
+/* Dimmed words cost contrast while they wait. Anyone who has asked for more
+   contrast, or whose system forces its own colours, gets the statement as plain
+   full-strength text with no runway, and none of the decorative light. */
+@media (prefers-contrast: more), (forced-colors: active) {
+  .motion .statement--live {
+    height: auto;
+  }
+
+  .motion .statement--live .statement__stage {
+    position: relative;
+    display: block;
+    min-height: 0;
+    padding-left: 0;
+  }
+
+  .motion .statement--live .statement__word {
+    opacity: 1;
+  }
+
+  .motion .statement--live .statement__rail,
+  .motion .flow__trail,
+  .motion .tilt::after,
+  .motion .site-footer::before {
+    display: none;
+  }
+}
+
+/* Paper has no scroll position: print everything at full strength. */
+@media print {
+  .motion .reveal,
+  .motion .hero__grid {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+
+  .motion .statement--live {
+    height: auto;
+  }
+
+  .motion .statement--live .statement__stage {
+    position: relative;
+    display: block;
+    min-height: 0;
+  }
+
+  .motion .statement--live .statement__word {
+    opacity: 1 !important;
+  }
+
+  .motion .statement--live .statement__rail,
+  .motion .flow__trail,
+  .motion .site-footer::before {
+    display: none;
+  }
+}

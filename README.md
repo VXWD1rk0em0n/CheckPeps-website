@@ -15,7 +15,7 @@ leaked key, or an unreviewed claim to appear. So the site has none:
 
 - **4 requests** to render the home page (HTML + CSS + JS + the hero art), all
   same-origin. Inner pages are 3 — they have no hero image.
-- **21 KB gzipped** of text, plus the hero art: 32 KB at `hero-1200.jpg` or
+- **24 KB gzipped** of text, plus the hero art: 32 KB at `hero-1200.jpg` or
   82 KB at `hero.jpg`, chosen by `srcset` from the viewport.
 - **No web fonts** — system font stack only.
 - **One raster image on the home page**: the hero art, in two `srcset` widths.
@@ -62,6 +62,36 @@ things must hold or the hero breaks:
 
 After any swap, re-check contrast against the composited backdrop — not against
 a screenshot, because text antialiasing contaminates pixel sampling.
+
+The copy column is capped at `56vw` from 1100px up, so it never runs far past
+the overlay's opaque zone.
+
+## Visual design
+
+An editorial, product-site look built from the existing palette, with no new
+images and no web fonts:
+
+- **Deep fields.** The masthead, inner-page headers, the safety block, and the
+  closing call to action sit on the deep teal; the footer drops to ink, the
+  darkest surface. Deep surfaces carry a faint hairline grid, and a glow tucked
+  into the top-right corner away from body copy, so text contrast is still
+  measured against the flat fill.
+- **Editorial type.** Display headings use the platform's display face
+  (`Segoe UI Variable Display` on Windows 11, the system face elsewhere),
+  tightly tracked, with the second clause of a heading in the accent
+  (`.h-accent`).
+- **Chapter and entry numbers.** Section eyebrows count through the page
+  ("01 | Who it is for") and grid cards carry "01", "02" in the corner.
+- **The wordmark.** The footer ends on a giant, faint "checkpeps". It lives in
+  `styles.css`, not in eight copies of the footer markup.
+- **Details.** Buttons that square their corners off under the pointer, links
+  whose underline draws in from the left, ledger rules between list items.
+
+The numbers and the wordmark are CSS-generated content with an empty
+alternative (`content: "…" / ""`), so screen readers skip them; browsers without
+that syntax drop the rule and show neither. Forced colours strip the fills, so
+deep blocks get a real border and lose their decorative layers. Print drops the
+fills and prints black on white.
 
 ## Motion
 
@@ -177,15 +207,19 @@ Must return nothing.
 
 In-browser checks performed, all 8 pages, light **and** dark:
 
-- 538 text elements, **0 WCAG AA contrast failures**
+- 551 text elements, **0 WCAG AA contrast failures** (re-run after the visual
+  refresh)
 - Exactly one `<h1>` per page, **no skipped heading levels**
 - 0 images without `alt`, 0 accessibility-exposed unlabelled SVGs, 0 empty links
-- 0 inline event handlers, 0 inline scripts, 0 cross-origin references
+- 0 inline event handlers, 0 inline scripts, 0 inline `style` attributes in the
+  markup, 0 cross-origin resources
 - 0 forms, 0 inputs
-- No horizontal overflow at **any width from 320px to 1920px**, across all 8
-  pages; all tap targets ≥ 24px (WCAG 2.2 SC 2.5.8)
+- No horizontal overflow across all 8 pages at 320, 375, 414, 600, 768, 899,
+  900, 1024, 1280, 1440, and 1920px; all tap targets ≥ 24px at 375px
+  (WCAG 2.2 SC 2.5.8)
 - WCAG 1.4.12 text spacing: no clipping or overflow with line-height 1.5,
-  letter-spacing 0.12em, word-spacing 0.16em, paragraph spacing 2em
+  letter-spacing 0.12em, word-spacing 0.16em, paragraph spacing 2em, across all
+  8 pages at 320, 375, and 1280px
 - Windows High Contrast supported via `@media (forced-colors: active)` — controls
   whose meaning was carried by a background fill keep an explicit border
 - Nav toggle: opens, closes, closes on `Escape` with focus returned, closes on
@@ -212,10 +246,9 @@ failures.
 
 ## Known gaps
 
-- **No visual screenshot review was possible** in the environment this was built
-  in — the browser pane could not composite frames, so verification was done
-  through the DOM, the CSSOM, computed styles, and the accessibility tree rather
-  than by eye. Look at it on a real screen before launch.
+- **Screenshot review has been Chromium-only**: the visual refresh was reviewed
+  at 1280px in light and dark and at 375px in light, in an embedded browser pane.
+  Look at it on real devices, and in Safari and Firefox, before launch.
 - Page chrome (header/footer) is duplicated across 8 files. That is the cost of
   having no build step. If the site grows past ~10 pages, revisit.
 - The motion layer's reduced-motion, increased-contrast, and forced-colours paths

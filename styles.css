@@ -40,8 +40,17 @@
   --on-deep-muted: #b9d4d6;
   --accent-on-deep: #7fd8ce;
 
-  --radius: 14px;
-  --radius-lg: 24px;
+  /* The darkest surface — the footer — and its hairlines. */
+  --ink: #061a1d;
+  --ink-border: #17363c;
+  /* Pending tags and flags sitting on deep or ink surfaces. */
+  --flag-on-deep: #f1c98f;
+  /* Hairline grid used as texture on deep surfaces. */
+  --grid-line: rgb(255 255 255 / 6%);
+
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
   --radius-pill: 999px;
 
   --measure: 68ch;
@@ -53,12 +62,18 @@
   --step-2: clamp(1.375rem, 1.25rem + 0.7vw, 1.9rem);
   /* Section headings run nearly as large as the h1 — that near-parity is a big
      part of the editorial feel, and 40px was reading as a subhead. */
-  --step-3: clamp(1.9rem, 1.4rem + 2.2vw, 3.25rem);
-  --step-4: clamp(2.25rem, 1.5rem + 3.2vw, 4rem);
+  --step-3: clamp(2rem, 1.35rem + 2.6vw, 3.6rem);
+  --step-4: clamp(2.4rem, 1.4rem + 3.8vw, 4.6rem);
 
   --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji";
+  /* Display type prefers Windows 11's optical display cut where it is installed;
+     macOS and iOS already switch to their display cut at these sizes. Still no
+     web font: everything here is already on the visitor's machine. */
+  --font-display: "Segoe UI Variable Display", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
 }
@@ -97,6 +112,9 @@
     --on-deep: #f2f8f8;
     --on-deep-muted: #a9c7ca;
     --accent-on-deep: #7fd8ce;
+
+    --ink: #050e11;
+    --ink-border: #182a30;
   }
 }
 
@@ -124,9 +142,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Display type is light and tightly led — that pairing is what reads as modern.
-   Card and UI headings stay heavier, because 430 at 18px reads as weak rather
-   than editorial. */
+/* Display type is light, tightly tracked, and set almost solid — that pairing
+   is what reads as modern. Card and UI headings stay heavier, because 430 at
+   18px reads as weak rather than editorial. */
 h1,
 h2,
 h3,
@@ -138,8 +156,10 @@ h4 {
 
 h1,
 h2 {
+  font-family: var(--font-display);
   font-weight: 430;
-  line-height: 1.03;
+  line-height: 1.02;
+  letter-spacing: -0.038em;
 }
 
 h3,
@@ -311,13 +331,33 @@ hr {
 }
 
 .eyebrow {
-  font-size: 0.8125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 650;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent);
   margin: 0;
 }
+
+/* Chapter numbers run through a page's sections: "01 | Who it is for". They
+   are generated content with an empty alternative, so assistive tech reads the
+   label alone. Browsers without that syntax drop the rule and show no number. */
+main { counter-reset: chapter; }
+
+.section .eyebrow::before {
+  counter-increment: chapter;
+  content: counter(chapter, decimal-leading-zero) / "";
+  padding-right: 0.7rem;
+  border-right: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* Second clause of a heading, set in the accent. */
+.h-accent { color: var(--accent); }
 
 .lede {
   font-size: var(--step-1);
@@ -345,7 +385,7 @@ hr {
   /* Without vertical separation an inset block reads as a full-bleed stripe and
      the corner radius stops doing any work. */
   margin-block: clamp(1.5rem, 4vw, 3rem);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   background: var(--deep);
   color: var(--on-deep);
 }
@@ -356,9 +396,12 @@ hr {
   color: var(--on-deep);
 }
 
-.section--feature .eyebrow {
+.section--feature .eyebrow,
+.section--feature .h-accent {
   color: var(--accent-on-deep);
 }
+
+.section--feature .callout { margin-top: 2rem; }
 
 .section--feature .lede,
 .section--feature .card p,
@@ -427,6 +470,9 @@ hr {
 
 /* --- Buttons ------------------------------------------------------------- */
 
+/* A pill that squares its corners off under the pointer. The resting radius is
+   half the height rather than 999px, so the corners visibly travel instead of
+   sitting still for most of the transition and then snapping. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -435,14 +481,19 @@ hr {
   padding: 0.95rem 1.75rem;
   min-height: 54px;
   border: 1px solid transparent;
-  border-radius: var(--radius-pill);
+  border-radius: 27px;
   font: inherit;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 140ms ease, border-color 140ms ease,
-    color 140ms ease;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    border-radius 520ms cubic-bezier(0.23, 1, 0.32, 1);
 }
+
+.btn:hover { border-radius: var(--radius); }
 
 .btn--primary {
   background: var(--accent);
@@ -472,33 +523,67 @@ hr {
   gap: 0.75rem;
 }
 
+/* Buttons closing a run of prose sit further off the last paragraph. */
+.prose > .btn-row { margin-top: 1.75rem; }
+
 /* --- Header -------------------------------------------------------------- */
 
-/* Dark chrome throughout, so the header reads as part of the masthead on the
-   home page and as deliberate site furniture everywhere else. */
+/* Dark glass throughout, so the header reads as part of the masthead on the
+   home page and as deliberate site furniture everywhere else. 80% ink keeps the
+   muted link colour above 6:1 even with white page content blurred behind it. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--deep) 90%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--deep-border);
+  background: color-mix(in srgb, var(--ink) 80%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  border-bottom: 1px solid color-mix(in srgb, var(--on-deep) 10%, transparent);
   color: var(--on-deep);
 }
 
 .site-header .brand,
 .site-header .brand:hover { color: var(--on-deep); }
 
-.site-header .nav__link { color: var(--on-deep-muted); }
+/* Small caps-style links with a rule that draws in from the left; the current
+   page keeps its rule and takes the mint. */
+.site-header .nav__link {
+  position: relative;
+  color: var(--on-deep-muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.site-header .nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.3rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
 
 .site-header .nav__link:hover {
   color: var(--on-deep);
-  background: color-mix(in srgb, var(--on-deep) 10%, transparent);
+  background: transparent;
 }
 
+.site-header .nav__link:hover::after { transform: scaleX(1); }
+
 .site-header .nav__link[aria-current="page"] {
-  color: var(--deep);
-  background: var(--accent-on-deep);
+  color: var(--accent-on-deep);
+  background: transparent;
+}
+
+.site-header .nav__link[aria-current="page"]::after {
+  height: 2px;
+  transform: scaleX(1);
 }
 
 .site-header .nav__toggle {
@@ -591,8 +676,8 @@ hr {
     position: absolute;
     inset-inline: 0;
     top: 100%;
-    background: var(--deep);
-    border-bottom: 1px solid var(--deep-border);
+    background: var(--ink);
+    border-bottom: 1px solid var(--ink-border);
     box-shadow: var(--shadow);
     padding: 0.5rem var(--gutter) 1rem;
   }
@@ -609,6 +694,15 @@ hr {
     padding: 0.75rem 0.75rem;
     font-size: 1rem;
   }
+
+  .site-header .nav__link { font-size: 0.875rem; }
+
+  /* A full-width rule under a full-width row reads as a divider, not a marker. */
+  .site-header .nav__link::after {
+    right: auto;
+    bottom: 0.45rem;
+    width: 1.5rem;
+  }
 }
 
 /* --- Hero ---------------------------------------------------------------- */
@@ -619,7 +713,7 @@ hr {
 .hero {
   position: relative;
   isolation: isolate;
-  padding-block: clamp(4rem, 9vw, 8rem) clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(4.5rem, 10vw, 8.5rem) clamp(4.5rem, 9vw, 7.5rem);
   overflow: hidden;
   background: var(--deep);
   color: var(--on-deep);
@@ -668,28 +762,33 @@ hr {
 }
 
 /* Inverted buttons: a teal fill would sit too close to the field behind it. */
-.hero .btn--primary {
+.hero .btn--primary,
+.cta-card .btn--primary {
   background: var(--on-deep);
   color: var(--deep);
 }
 
-.hero .btn--primary:hover {
+.hero .btn--primary:hover,
+.cta-card .btn--primary:hover {
   background: var(--accent-on-deep);
   color: var(--deep);
 }
 
-.hero .btn--secondary {
+.hero .btn--secondary,
+.cta-card .btn--secondary {
   color: var(--on-deep);
   border-color: color-mix(in srgb, var(--on-deep) 45%, transparent);
 }
 
-.hero .btn--secondary:hover {
+.hero .btn--secondary:hover,
+.cta-card .btn--secondary:hover {
   background: color-mix(in srgb, var(--on-deep) 12%, transparent);
   color: var(--on-deep);
   border-color: var(--on-deep);
 }
 
-.hero :focus-visible { outline-color: var(--accent-on-deep); }
+.hero :focus-visible,
+.cta-card :focus-visible { outline-color: var(--accent-on-deep); }
 
 /* Stands in for the photography an editorial site would open with: a soft field
    of brand colour so the first screen is not flat white. If real art arrives,
@@ -719,6 +818,7 @@ hr {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
     100deg,
     /* Hold near-opaque across the copy column, then release quickly so the art
@@ -742,8 +842,22 @@ hr {
   }
 }
 
-/* The glow pseudo-element is gone: the art supplies the atmosphere now, and
-   keeping it meant another layer sitting over the image. */
+/* Hairline grid over the field — the lab-notebook texture shared by every deep
+   surface. Above the contrast overlay so it survives on the copy side, faded out
+   toward the art, and faint enough that no text measurably loses contrast. */
+.hero__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(75% 90% at 0% 0%, #000 15%, transparent 80%);
+  mask-image: radial-gradient(75% 90% at 0% 0%, #000 15%, transparent 80%);
+}
 
 .hero__grid {
   position: relative;
@@ -758,36 +872,84 @@ hr {
 
 /* Single column now. The right side of the hero is the art, which is the whole
    point of having art. */
+/* Wide enough for each sentence of the headline to hold one line on a laptop,
+   and capped at 56vw so the copy never runs past the overlay's opaque zone. */
 .hero__copy {
-  max-width: 40rem;
+  max-width: 44rem;
+}
+
+@media (min-width: 1100px) {
+  .hero__copy { max-width: min(52rem, 56vw); }
 }
 
 @media (min-width: 900px) {
   .hero {
-    min-height: min(84vh, 780px);
+    min-height: min(calc(100vh - 65px), 880px);
     display: grid;
     align-items: center;
   }
 }
 
-/* The flow panel keeps its light-card styling once outside the hero. */
-.flow-section {
+/* Outside the hero the flow is an editorial spread: its title set as a display
+   line on the left, holding its place while the steps scroll past on the right. */
+.flow-section .hero__panel {
   display: grid;
-  justify-items: center;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
-.flow-section .hero__panel {
-  width: 100%;
-  max-width: 46rem;
+.flow-section .panel__title {
+  max-width: 13ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 430;
+  line-height: 1.02;
+  letter-spacing: -0.038em;
+  text-transform: none;
+  color: var(--text);
+}
+
+.flow-section .flow {
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+@media (min-width: 900px) {
+  .flow-section .hero__panel {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: start;
+  }
+
+  .flow-section .panel__title {
+    position: sticky;
+    top: calc(65px + 2.5rem);
+  }
 }
 
 .hero__copy > * + * { margin-top: 1.15rem; }
 
 /* Break at the sentence, never inside it — the headline's whole job is the
    contrast between the two clauses, which a mid-sentence wrap destroys. */
-.hero h1 { max-width: 22ch; }
+.hero h1 { font-size: clamp(2.5rem, 1.1rem + 3.7vw, 4.75rem); }
 
 .hero h1 span { display: block; }
+
+/* A lit dot stands in for the chapter number the sections below carry. */
+.hero .eyebrow::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 0.3rem color-mix(in srgb, currentColor 22%, transparent);
+}
 
 /* On the deep masthead this must be the light mint, not the dark brand teal —
    #0f6b6b on #0d3b40 is very nearly invisible. */
@@ -928,23 +1090,55 @@ hr {
 }
 
 .card {
+  position: relative;
   background: var(--bg-raised);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: clamp(1.25rem, 2.5vw, 1.6rem);
+  padding: clamp(1.4rem, 2.6vw, 1.9rem);
+  transition: border-color 200ms ease;
 }
 
+.card:hover { border-color: var(--border-strong); }
+
 .card > * + * { margin-top: 0.6rem; }
+
+/* Cards in a grid carry an index in the corner, like entries in a notebook.
+   Generated with an empty alternative, so it is never announced. */
+.grid { counter-reset: card; }
+
+.grid > .card::before {
+  counter-increment: card;
+  content: counter(card, decimal-leading-zero) / "";
+  position: absolute;
+  top: clamp(1.4rem, 2.6vw, 1.9rem);
+  right: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+/* Keep a heading that opens its card clear of the index. */
+.grid > .card > h3:first-child { padding-right: 2.5rem; }
+
+.section--feature .card::before { color: var(--accent-on-deep); }
 
 .card__icon {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   border-radius: var(--radius);
-  background: var(--accent-subtle);
+  background: linear-gradient(
+    135deg,
+    var(--accent-subtle),
+    color-mix(in srgb, var(--accent) 14%, var(--accent-subtle))
+  );
   color: var(--accent);
-  margin-bottom: 0.9rem;
+  margin-bottom: 1.1rem;
 }
 
 .card h3 {
@@ -973,12 +1167,16 @@ hr {
 }
 
 .step {
+  position: relative;
   background: var(--bg-raised);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: clamp(1.25rem, 2.5vw, 1.6rem);
+  padding: clamp(1.4rem, 2.6vw, 1.9rem);
   counter-increment: step;
+  transition: border-color 200ms ease;
 }
+
+.step:hover { border-color: var(--border-strong); }
 
 .step > * + * { margin-top: 0.55rem; }
 
@@ -1003,6 +1201,8 @@ hr {
   font-size: 0.9375rem;
 }
 
+.steps + .callout { margin-top: 2rem; }
+
 /* --- Two-column "does / does not" --------------------------------------- */
 
 .split {
@@ -1018,7 +1218,7 @@ hr {
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background: var(--bg-raised);
-  padding: clamp(1.4rem, 3vw, 2rem);
+  padding: clamp(1.6rem, 3.4vw, 2.5rem);
 }
 
 .panel--does {
@@ -1036,18 +1236,19 @@ hr {
   align-items: center;
   gap: 0.6rem;
   font-size: var(--step-2);
-  margin-bottom: 1.1rem;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.4rem;
 }
 
 .panel--does .panel__heading { color: var(--accent); }
 .panel--does-not .panel__heading { color: var(--stop); }
 
+/* Ruled like a ledger: hairlines between items instead of loose spacing. */
 .checklist {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.7rem;
 }
 
 .checklist li {
@@ -1055,9 +1256,18 @@ hr {
   grid-template-columns: 20px minmax(0, 1fr);
   gap: 0.65rem;
   align-items: start;
+  padding-block: 0.8rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
   font-size: 0.9375rem;
   line-height: 1.55;
 }
+
+.checklist li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.checklist li:last-child { padding-bottom: 0; }
 
 .checklist svg {
   margin-top: 0.28em;
@@ -1132,13 +1342,130 @@ hr {
 
 .cta .btn-row { justify-content: center; }
 
+/* The closing call to action is a lit panel rather than a paragraph on paper. */
+.cta-card {
+  border-radius: var(--radius-xl);
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+  background: var(--deep);
+  color: var(--on-deep);
+}
+
+.cta-card .cta {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.cta-card .eyebrow { justify-content: center; }
+
+.cta-card h2 { color: var(--on-deep); }
+
+.cta-card .eyebrow,
+.cta-card .h-accent { color: var(--accent-on-deep); }
+
+.cta-card .lede { color: var(--on-deep-muted); }
+
+.cta-card + .callout {
+  max-width: 46rem;
+  margin: 1.25rem auto 0;
+}
+
+/* --- Deep fields --------------------------------------------------------- */
+
+/* Deep surfaces below the hero share two decorative layers: a hairline grid
+   fading out from the top-right corner, and a soft glow tucked into that corner.
+   Both sit under the content in an isolated block, and the glow stays in the
+   corner away from body copy, so text contrast is still measured against the
+   flat fill. `clip`, not `hidden`, so the pinned statement keeps working. */
+.page-head,
+.section--feature,
+.cta-card {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.page-head::before,
+.section--feature::before,
+.cta-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(85% 75% at 100% 0%, #000 10%, transparent 70%);
+  mask-image: radial-gradient(85% 75% at 100% 0%, #000 10%, transparent 70%);
+}
+
+.page-head::after,
+.section--feature::after,
+.cta-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  width: min(80vw, 56rem);
+  aspect-ratio: 1;
+  translate: 40% -50%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent-on-deep) 15%, transparent),
+    transparent
+  );
+}
+
 /* --- Footer -------------------------------------------------------------- */
 
+/* The page ends on ink: the darkest surface, under a giant wordmark. */
 .site-footer {
-  background: var(--bg-subtle);
-  border-top: 1px solid var(--border);
-  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  background: var(--ink);
+  color: var(--on-deep-muted);
+  padding-block: clamp(3.5rem, 7vw, 5.5rem) clamp(2.5rem, 5vw, 3.5rem);
   font-size: 0.9375rem;
+}
+
+.site-footer .brand,
+.site-footer .brand:hover { color: var(--on-deep); }
+
+.site-footer :focus-visible { outline-color: var(--accent-on-deep); }
+
+.site-footer .pending-tag {
+  border-color: var(--flag-on-deep);
+  background: color-mix(in srgb, var(--flag-on-deep) 10%, transparent);
+  color: var(--flag-on-deep);
+}
+
+/* Decorative, so it is generated content with an empty alternative rather than
+   a node in eight copies of the footer markup. Clipped to its box, so a wide
+   fallback font can never push the page sideways. */
+.site-footer .wrap::after {
+  content: "checkpeps" / "";
+  display: block;
+  overflow: hidden;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 18vw, 16.5rem);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.065em;
+  text-align: center;
+  white-space: nowrap;
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--on-deep) 20%, transparent),
+    color-mix(in srgb, var(--on-deep) 3%, transparent)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+  pointer-events: none;
 }
 
 .footer__grid {
@@ -1154,19 +1481,19 @@ hr {
 }
 
 .footer__blurb {
-  color: var(--text-muted);
+  color: var(--on-deep-muted);
   max-width: 42ch;
   margin-top: 0.85rem;
   font-size: 0.9375rem;
 }
 
 .footer__heading {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 650;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 0.85rem;
+  color: var(--on-deep);
+  margin-bottom: 1rem;
 }
 
 .footer__list {
@@ -1182,18 +1509,24 @@ hr {
 .footer__list a {
   display: inline-block;
   padding-block: 0.3rem;
-  color: var(--text-muted);
+  color: var(--on-deep-muted);
   text-decoration: none;
+  /* An underline that draws in from the left, instead of snapping on. */
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 0.2rem) /
+    0 1px no-repeat;
+  transition:
+    color 160ms ease,
+    background-size 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .footer__list a:hover {
-  color: var(--accent);
-  text-decoration: underline;
+  color: var(--on-deep);
+  background-size: 100% 1px;
 }
 
 .footer__pending {
   font-size: 0.75rem;
-  color: var(--flag);
+  color: var(--flag-on-deep);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -1201,8 +1534,8 @@ hr {
 .footer__bottom {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-  color: var(--text-muted);
+  border-top: 1px solid var(--ink-border);
+  color: var(--on-deep-muted);
   font-size: 0.875rem;
 }
 
@@ -1214,12 +1547,27 @@ hr {
 
 /* --- Policy pages -------------------------------------------------------- */
 
+/* Inner pages open on the same deep field as the home masthead. */
 .page-head {
-  padding-block: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 3vw, 2rem);
-  border-bottom: 1px solid var(--border);
+  padding-block: clamp(3.5rem, 8vw, 6.5rem) clamp(3rem, 6vw, 4.5rem);
+  background: var(--deep);
+  color: var(--on-deep);
 }
 
-.page-head > * + * { margin-top: 0.85rem; }
+.page-head > * + *,
+.page-head .wrap > * + * { margin-top: 0.85rem; }
+
+.page-head .wrap > h1 + .lede { margin-top: 1.25rem; }
+
+.page-head h1 { max-width: 20ch; }
+
+.page-head .lede,
+.page-head .breadcrumb { color: var(--on-deep-muted); }
+
+.page-head .breadcrumb a,
+.page-head .h-accent { color: var(--accent-on-deep); }
+
+.page-head :focus-visible { outline-color: var(--accent-on-deep); }
 
 .breadcrumb {
   font-size: 0.875rem;
@@ -1701,5 +2049,71 @@ hr {
   .motion .flow__trail,
   .motion .site-footer::before {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Surface opt-outs
+   The deep fields, ink footer, and wordmark all lean on fills and gradients
+   that forced colours strip and printers skip.
+   ========================================================================== */
+
+::selection {
+  background: rgb(94 200 191 / 38%);
+}
+
+@media (forced-colors: active) {
+  /* The current-page rule is a background fill, which forced colours drop. */
+  .site-header .nav__link[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 0.45em;
+  }
+
+  /* Deep blocks lose their fill, so give them an edge. */
+  .page-head,
+  .cta-card,
+  .section--feature {
+    border: 1px solid CanvasText;
+  }
+
+  .site-footer .wrap::after,
+  .hero__media::before,
+  .page-head::before,
+  .page-head::after,
+  .section--feature::before,
+  .section--feature::after,
+  .cta-card::before,
+  .cta-card::after {
+    display: none;
+  }
+}
+
+/* Browsers skip backgrounds when printing, which would leave light text from
+   the deep and ink surfaces on white paper. */
+@media print {
+  .hero,
+  .hero *,
+  .page-head,
+  .page-head *,
+  .section--feature,
+  .section--feature *,
+  .cta-card,
+  .cta-card *,
+  .site-footer,
+  .site-footer * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  .hero__media,
+  .site-footer .wrap::after,
+  .page-head::before,
+  .page-head::after,
+  .section--feature::before,
+  .section--feature::after,
+  .cta-card::before,
+  .cta-card::after {
+    display: none !important;
   }
 }

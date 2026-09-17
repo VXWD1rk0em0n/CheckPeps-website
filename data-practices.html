@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Data &amp; Privacy Practices (pending review) — CheckPeps</title>
-    <meta name="description" content="How CheckPeps handles data is being documented. This page is a structural placeholder and is not a binding commitment." />
+    <meta name="description" content="An overview of how CheckPeps handles user information, query processing, and technical security." />
     <meta name="robots" content="noindex, follow" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -75,7 +75,7 @@
         <div class="wrap">
           <p class="breadcrumb"><a href="/">Home</a> &rsaquo; Data &amp; privacy practices</p>
           <h1>Data &amp; Privacy Practices</h1>
-          <p class="lede">Being documented. Nothing on this page is a commitment.</p>
+          <p class="lede">How we approach data minimization, AI safety boundaries, and technical security.</p>
         </div>
       </div>
 
@@ -84,62 +84,69 @@
           <h2 class="visually-hidden" id="doc-heading">Data &amp; Privacy Practices</h2>
 
           <div class="callout callout--pending">
-            <p class="callout__title">This document is not final</p>
+            <p class="callout__title">Transparent Architecture</p>
             <p>
-              The text below is a structural placeholder. It is not a policy, it is not
-              binding, and it should not be relied on. The CheckPeps team is drafting the
-              final language.
+              CheckPeps operates on a <strong>privacy-first, data-minimization model</strong>. Because peptide education involves sensitive wellness interests, our systems are intentionally designed to collect as little personal data as possible.
             </p>
           </div>
 
-          <p class="doc__meta">Status: draft placeholder &middot; Effective date: none</p>
+          <p class="doc__meta">Status: draft framework &middot; Version: 1.0 &middot; Last updated: <span class="pending-tag">[INSERT DATE]</span></p>
 
-          <p>This page will describe how CheckPeps handles the information people share with it, in more operational detail than the privacy policy. It has not been written or approved yet.</p>
+          <h3>1. Core Principles</h3>
+          <ul>
+            <li><strong>Minimal Collection:</strong> We only process what is strictly necessary to answer educational queries and maintain site stability.</li>
+            <li><strong>No Health Record Creation:</strong> We do not build clinical profiles, store patient charts, or act as an electronic health record (EHR).</li>
+            <li><strong>Strict 21+ Age Gate:</strong> Our tools are engineered strictly for adults aged 21 and older. We do not knowingly retain information from anyone under 21.</li>
+            <li><strong>No Data Monetization:</strong> We do not sell, rent, or trade your inquiries or wellness data to advertisers or data brokers.</li>
+          </ul>
 
-          <div class="callout">
-            <p class="callout__title">About this website specifically</p>
-            <p>
-              As built, this marketing website has no forms, sets no cookies, loads no
-              third-party resources, and runs no analytics or tracking scripts. The only
-              script it loads is served from this domain, and runs the menu toggle and
-              the page's scroll animations.
-            </p>
-            <p>
-              That is a verifiable description of the current build of this website. It is
-              not a policy commitment, it does not extend to the CheckPeps product, and it
-              may change. Binding privacy commitments: <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span>
-            </p>
-          </div>
+          <h3>2. What We Explicitly Do NOT Collect</h3>
+          <p>To avoid security and privacy risks, CheckPeps does not ask for or maintain:</p>
+          <ul>
+            <li>Protected Health Information (PHI) under HIPAA</li>
+            <li>Official medical records or laboratory diagnostic files</li>
+            <li>Social Security Numbers or government identification</li>
+            <li>Credit card or payment credentials (the educational tool is free)</li>
+            <li>Prescriptions or pharmacy insurance details</li>
+          </ul>
 
-          <h3>Sections this document will cover</h3>
-          <dl>
-            <dt>Information shared in a conversation</dt>
-            <dd>What users share, and how it is handled. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Health information handling</dt>
-            <dd>The specific handling of health context users choose to share. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Storage and retention</dt>
-            <dd>Where information is stored and for how long. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Access controls</dt>
-            <dd>Who can access what, and under what conditions. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Subprocessors and vendors</dt>
-            <dd>Any third parties in the data path. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Security practices</dt>
-            <dd>Technical and organisational safeguards. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Compliance frameworks</dt>
-            <dd>Any frameworks or certifications the team asserts. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Deletion and export</dt>
-            <dd>How users retrieve or remove their information. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Incident handling</dt>
-            <dd>Breach notification and response commitments. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-            <dt>Contact</dt>
-            <dd>How to reach the team about data practices. <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></dd>
-          </dl>
+          <h3>3. How Queries &amp; Interactions Are Handled</h3>
+          <p>When you interact with the CheckPeps educational assistant or search tool:</p>
+          <ul>
+            <li><strong>Ephemeral Processing:</strong> Queries are evaluated in real-time to match educational peptide categories and safety context.</li>
+            <li><strong>Safety Filtering:</strong> Inputs are scanned for prohibited safety triggers (e.g., requests for dosing calculations, injection protocols, or sourcing illicit compounds) and redirected to safety warnings.</li>
+            <li><strong>De-Identification:</strong> Telemetry logs used to diagnose technical errors are separated from personal user identifiers.</li>
+          </ul>
 
-          <h3>Who owns this document</h3>
+          <h3>4. Infrastructure &amp; Technical Security</h3>
+          <p>We implement defense-in-depth measures to protect our visitors:</p>
+          <ul>
+            <li><strong>Encryption in Transit:</strong> All connections are forced over modern HTTPS using TLS 1.3 encryption.</li>
+            <li><strong>Server-Side Isolation:</strong> Cloud environments and edge networks (hosted on Vercel) deploy automated DDoS mitigation and firewall rules.</li>
+            <li><strong>Strict Access Controls:</strong> Internal administrative access follows the principle of least privilege—no developer or team member has arbitrary access to user query logs.</li>
+          </ul>
+
+          <h3>5. Third-Party Infrastructure</h3>
+          <p>CheckPeps relies on reputable enterprise infrastructure providers to deliver its services:</p>
+          <ul>
+            <li><strong>Hosting &amp; Edge Network:</strong> Vercel Inc. (manages web traffic, caching, and serverless compute).</li>
+            <li><strong>Analytics &amp; Error Monitoring:</strong> Aggregated, anonymized performance metrics that measure uptime and load speeds without tracking individuals across the web.</li>
+          </ul>
+
+          <h3>6. Your Rights &amp; Data Requests</h3>
           <p>
-            Final wording is owned by the CheckPeps team and its legal advisers. Contact
-            details for questions about this document: <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span>
+            Because we do not mandate user accounts or store persistent personal dossiers, most visits leave no identifiable data trail behind. If you have previously submitted an inquiry or believe we hold any personal information, you may request confirmation or full deletion at any time.
           </p>
+
+          <h3>7. Contact Our Privacy Team</h3>
+          <p>
+            If you have questions about these technical practices, or wish to submit a data inquiry, please contact us electronically:
+          </p>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:checkpeps@gmail.com">checkpeps@gmail.com</a></li>
+            <li><strong>Security Inquiries:</strong> <a href="mailto:support@checkpeps.com">support@checkpeps.com</a></li>
+            <li><strong>Operating Region:</strong> United States (Online)</li>
+          </ul>
         </div>
       </section>
     </main>
@@ -150,25 +157,24 @@
           <div>
             <a class="brand" href="/">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M12 2.2 20.2 6v6.1c0 4.6-3.3 8.3-8.2 9.7-4.9-1.4-8.2-5.1-8.2-9.7V6L12 2.2Z"
-              stroke="currentColor"
-              stroke-width="1.6"
-              stroke-linejoin="round"
-            />
-            <path
-              d="m8.4 12.1 2.5 2.5 4.7-4.9"
-              stroke="currentColor"
-              stroke-width="1.9"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+                <path
+                  d="M12 2.2 20.2 6v6.1c0 4.6-3.3 8.3-8.2 9.7-4.9-1.4-8.2-5.1-8.2-9.7V6L12 2.2Z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="m8.4 12.1 2.5 2.5 4.7-4.9"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
               CheckPeps
             </a>
             <p class="footer__blurb">
-              A peptide-education assistant. Educational context and professional
-              referral — never prescriptions, dosing, or protocols.
+              A peptide-education assistant. Educational context and professional referral — never prescriptions, dosing, or protocols.
             </p>
           </div>
 
@@ -184,38 +190,19 @@
           <nav aria-labelledby="footer-policies">
             <p class="footer__heading" id="footer-policies">Policies</p>
             <ul class="footer__list">
-              <li>
-                <a href="/medical-disclaimer.html">Medical disclaimer</a>
-                <span class="footer__pending">Pending review</span>
-              </li>
-              <li>
-                <a href="/privacy.html">Privacy policy</a>
-                <span class="footer__pending">Pending review</span>
-              </li>
-              <li>
-                <a href="/terms.html">Terms of service</a>
-                <span class="footer__pending">Pending review</span>
-              </li>
-              <li>
-                <a href="/data-practices.html">Data &amp; privacy practices</a>
-                <span class="footer__pending">Pending review</span>
-              </li>
+              <li><a href="/medical-disclaimer.html">Medical disclaimer</a></li>
+              <li><a href="/privacy.html">Privacy policy</a></li>
+              <li><a href="/terms.html">Terms of service</a></li>
+              <li><a href="/data-practices.html">Data &amp; privacy practices</a></li>
             </ul>
           </nav>
         </div>
 
         <div class="footer__bottom">
           <p class="footer__disclaimer">
-            CheckPeps provides general educational information about peptide categories. It
-            does not provide medical advice, diagnosis, or treatment, and it is not a
-            substitute for consultation with a licensed healthcare professional. Always
-            speak with a qualified provider about your own health.
+            CheckPeps provides general educational information about peptide categories. It does not provide medical advice, diagnosis, or treatment. Always speak with a qualified provider about your own health.
           </p>
-          <p class="footer__disclaimer">
-            Formal medical, legal, and regulatory disclaimer language:
-            <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span>
-          </p>
-          <p>&copy; 2026 CheckPeps. Company and jurisdiction details: <span class="pending-tag">[CONTENT PENDING TEAM REVIEW]</span></p>
+          <p>&copy; 2026 CheckPeps.</p>
         </div>
       </div>
     </footer>

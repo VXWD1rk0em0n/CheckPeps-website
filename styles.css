@@ -614,7 +614,12 @@ main { counter-reset: chapter; }
 
 .brand:hover { color: var(--text); }
 
-.brand svg { flex: none; }
+.brand svg,
+.brand__mark { flex: none; }
+
+/* The CP mark carries its own white disc, so it reads on the deep header and
+   footer and on light surfaces alike. */
+.brand__mark { display: block; border-radius: 50%; }
 
 .nav__list {
   display: flex;

@@ -126,12 +126,14 @@ storytelling" block at the end of `styles.css`. The statement markup in
 
 ## Before you deploy
 
-1. **Replace the placeholder domain.** Every canonical, `og:url`, sitemap entry,
-   and `robots.txt` sitemap line uses `https://checkpeps.com`. If that is not the
-   production origin:
+1. **Keep absolute URLs on the live origin.** Every canonical, `og:url`,
+   `og:image`, sitemap entry, and the `robots.txt` sitemap line uses
+   `https://www.checkpeps.us` (the apex `checkpeps.us` redirects there). The
+   project does not own `checkpeps.com`, so never point a link, tag, or email
+   address at it. If the origin changes, update them all together:
 
    ```bash
-   grep -rl "checkpeps.com" . | xargs sed -i "s|https://checkpeps.com|https://YOUR-DOMAIN|g"
+   grep -rl "https://www.checkpeps.us" . | xargs sed -i "s|https://www.checkpeps.us|https://NEW-ORIGIN|g"
    ```
 
 2. **Translate `_headers`** if you are not on Netlify or Cloudflare Pages. The

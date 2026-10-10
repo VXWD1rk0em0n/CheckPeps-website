@@ -1447,17 +1447,31 @@ main { counter-reset: chapter; }
 }
 
 /* Decorative, so it is generated content with an empty alternative rather than
-   a node in eight copies of the footer markup. Clipped to its box, so a wide
-   fallback font can never push the page sideways. */
+   a node in eight copies of the footer markup. Clipped horizontally, so a wide
+   fallback font can never push the page sideways.
+
+   The line box stays shorter than the letters on purpose, to keep the footer
+   tight. `clip` plus a clip margin lets the ascenders and the tails of the p's
+   show anyway; with plain `overflow: hidden` and a 0.8 line box they were
+   sliced flat, which is what a laptop-width footer made obvious. */
+.site-footer .wrap { container-type: inline-size; }
+
 .site-footer .wrap::after {
   content: "checkpeps" / "";
   display: block;
   overflow: hidden;
+  overflow: clip;
+  overflow-clip-margin: 0.25em;
   margin-top: clamp(2.5rem, 6vw, 4rem);
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 18vw, 16.5rem);
+  /* Viewport width is the wrong ruler once the wrap stops growing: past about
+     1500px the word ran wider than its box and the last letter was cut off.
+     The second rule measures the wrap itself and leaves room for fonts wider
+     than the house one; the first is the fallback where cqw is unsupported. */
+  font-size: clamp(3.5rem, 18vw, 16rem);
+  font-size: clamp(3.5rem, min(18vw, 21.5cqw), 16rem);
   font-weight: 600;
-  line-height: 0.8;
+  line-height: 0.9;
   letter-spacing: -0.065em;
   text-align: center;
   white-space: nowrap;

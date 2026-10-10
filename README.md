@@ -39,7 +39,9 @@ If you add a dependency, re-run the checks in "Verification" below.
 | `404.html` | Not-found page |
 | `styles.css` | All styles, light + dark via `prefers-color-scheme` |
 | `main.js` | Mobile nav toggle and the motion layer (see "Motion"). The only script. |
-| `_headers` | CSP + security headers (Netlify/Cloudflare format) |
+| `vercel.json` | Security headers (CSP and friends) and cache policy, in the form Vercel reads |
+| `.vercelignore` | Repo files kept out of the deploy, such as `.claude/` |
+| `terms.css` | Styles for `terms.html`, which predates the design system |
 | `robots.txt`, `sitemap.xml`, `site.webmanifest` | Crawl + install metadata |
 | `favicon.svg`, `apple-touch-icon.png`, `og-image.png` | Icons and social card |
 
@@ -136,11 +138,12 @@ storytelling" block at the end of `styles.css`. The statement markup in
    grep -rl "https://www.checkpeps.us" . | xargs sed -i "s|https://www.checkpeps.us|https://NEW-ORIGIN|g"
    ```
 
-2. **Translate `_headers`** if you are not on Netlify or Cloudflare Pages. The
-   CSP is `default-src 'none'` with `'self'` for script/style/img/font — no
-   `unsafe-inline`, because the site has no inline scripts or handlers. For
-   nginx, the equivalent is `add_header Content-Security-Policy "...";` with the
-   same policy string.
+2. **Translate `vercel.json`** if you move off Vercel. The CSP is
+   `default-src 'none'` with `'self'` for script/style/img/font, no
+   `unsafe-inline`: the site has no inline scripts, handlers, or style
+   attributes, and must stay that way. For nginx the equivalent is
+   `add_header Content-Security-Policy "...";` with the same policy string.
+   Netlify and Cloudflare Pages want a `_headers` file instead.
 
 3. **Wire the 404.** Most static hosts need to be told to serve `404.html`.
 
@@ -217,10 +220,10 @@ refresh and the revised legal pages were combined:
 - Exactly one `<h1>` per page, **no skipped heading levels**
 - 0 images without `alt`, 0 accessibility-exposed unlabelled SVGs, 0 empty links
 - 0 inline event handlers, 0 inline scripts, 0 cross-origin resources
-- 0 inline `style` attributes on home, how-it-works, safety, data practices, and
-  404. `privacy.html` (27) and `medical-disclaimer.html` (3) carry inline
-  styles, and `terms.html` is a standalone page with its own `<style>` block and
-  no `styles.css`; the CSP in `_headers` would block all of those
+- 0 inline `style` attributes and 0 `<style>` blocks on every page. The rules
+  that used to sit in `privacy.html` (25) and `medical-disclaimer.html` (3) are
+  now `.prose .table` and `.callout--stop` in `styles.css`, and `terms.html`
+  loads `terms.css`. The CSP would block them in any other form
 - 0 forms, 0 inputs
 - No horizontal overflow at 320, 375, 414, 600, 768, 899, 900, 1024, 1280, 1440,
   and 1920px on every page except `privacy.html`, whose table is wider than the

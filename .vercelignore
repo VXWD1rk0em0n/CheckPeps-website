@@ -1,0 +1,5 @@
+# Repository files that should not be served from the site. Until this existed,
+# www.checkpeps.us/.claude/launch.json was publicly downloadable.
+.claude
+LEGAL-OPEN-ITEMS.md
+README.md

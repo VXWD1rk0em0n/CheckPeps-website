@@ -112,8 +112,8 @@
               </tr>
               <tr style="border-bottom: 1px solid var(--border, #334155);">
                 <td style="padding: 10px;"><strong>Device/Telemetry Data</strong></td>
-                <td style="padding: 10px;">Steps, heart rate, sleep patterns, activity level</td>
-                <td style="padding: 10px;">Automatically via sensors/integrations</td>
+                <td style="padding: 10px;">Oura Ring readings you choose to connect: temperature, readiness and sleep scores, heart rate, HRV, breathing rate, blood oxygen, and profile age (see Section 2a)</td>
+                <td style="padding: 10px;">Oura, only with your permission</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border, #334155);">
                 <td style="padding: 10px;"><strong>Usage Data</strong></td>
@@ -136,11 +136,53 @@
             We classify all wearable and wellness metrics as <em>non-medical wellness data</em>. This data is not intended to diagnose, treat, cure, or prevent any disease.
           </p>
 
+          <h3>2a. Oura Ring Data (Optional)</h3>
+          <p>
+            If you choose to connect an Oura Ring, CheckPeps reads a limited set of your Oura data through Oura&rsquo;s official API. Connecting is optional; the Service works without it.
+          </p>
+          <p>
+            <strong>How you connect.</strong> You sign in on Oura&rsquo;s own website and approve access there, so we never see your Oura password. Oura&rsquo;s approval screen lets you decline any data type. We ask for three kinds of access only &mdash; daily summaries, blood oxygen (SpO2), and basic profile information &mdash; and never for your email address, continuous heart-rate data, workouts, tags, or guided sessions.
+          </p>
+          <p><strong>What we read</strong>, from the most recent seven days, each time a screening runs:</p>
+          <ul>
+            <li><strong>Body temperature:</strong> nightly temperature deviation and multi-night temperature trend.</li>
+            <li><strong>Daily scores:</strong> readiness score, sleep score, and heart rate variability (HRV) balance.</li>
+            <li><strong>Overnight vitals:</strong> resting heart rate, HRV, and breathing rate from your main sleep each night.</li>
+            <li><strong>Blood oxygen:</strong> average overnight SpO2 and, when that average is low, Oura&rsquo;s breathing disturbance index.</li>
+            <li><strong>Profile age:</strong> the age on your Oura profile. Oura&rsquo;s profile data can also include your weight, height, sex, and email address; we discard those without using or storing them.</li>
+          </ul>
+          <p>
+            Oura&rsquo;s responses contain more detail than this (for example, sleep stages and movement). We use only the items above and do not store the rest.
+          </p>
+          <p><strong>What we use it for.</strong> Only to check whether a topic belongs with a clinician before any educational content is shown:</p>
+          <ul>
+            <li>An elevated nightly temperature, a possible sign of illness, stops the screening and directs you to a physician.</li>
+            <li>If recent temperature data is missing, we ask you to sync your ring or tell us about any illness, rather than assuming you are well.</li>
+            <li>Other readings appear only as context notes to discuss with a licensed professional (for example, that your resting heart rate is above your usual range). They never stop the screening on their own and are never presented as a diagnosis.</li>
+            <li>If the age on your Oura profile is under 21, the Service is not available to you, whatever age you entered (see Section 10).</li>
+          </ul>
+          <p>
+            We do not use Oura data for advertising or marketing, we do not sell it, and we do not use it to train AI models.
+          </p>
+          <p>
+            <strong>Who else sees it.</strong> To write an educational response, we send our AI provider the context notes described above, not your raw Oura data (see Section 6). When a screening stops or refers you to a physician, CheckPeps writes that response itself, and no Oura-derived information is sent to the AI provider.
+          </p>
+          <p>
+            <strong>How long we keep it.</strong> We read Oura data when a screening runs and do not keep the raw readings afterward. We keep the resulting context notes for <span class="pending-tag">[retention period]</span>. The access token that lets CheckPeps read your Oura data is protected with the safeguards in Section 8 and kept until you disconnect Oura or delete your account.
+          </p>
+          <p>
+            <strong>Disconnecting.</strong> You can revoke CheckPeps&rsquo; access at any time in your Oura account settings, or by emailing us at <a href="mailto:checkpeps@gmail.com">checkpeps@gmail.com</a>. Once access is revoked, we can no longer read your Oura data and we delete the stored access token. Data that Oura itself holds is governed by Oura&rsquo;s privacy policy, not this one.
+          </p>
+          <p>
+            <strong>Not a medical device.</strong> Oura is a consumer wellness device. CheckPeps uses its readings only as general wellness context, not to diagnose, treat, or prevent any condition.
+          </p>
+
           <h3>3. How We Use Information</h3>
           <ul>
             <li>Provide, maintain, and operate the educational service.</li>
             <li>Generate wellness insights, trends, and automated scores.</li>
-            <li>Improve, tune, and secure underlying algorithmic models.</li>
+            <li>Check connected Oura readings for topics that belong with a clinician, and confirm the 21+ age requirement (Section 2a).</li>
+            <li>Improve, tune, and secure underlying algorithmic models. Oura data is never used for this (Section 2a).</li>
             <li>Provide customer support, fraud prevention, and security verification.</li>
             <li>Deliver informational or marketing communications (with opt-out mechanisms).</li>
             <li>Ensure legal compliance and enforcement of our Terms of Service.</li>
@@ -161,6 +203,7 @@
           <ul>
             <li>Clickwrap acceptance of this Policy and the Terms of Service.</li>
             <li>Operating-system level granular permission prompts (sensors, device storage).</li>
+            <li>Oura&rsquo;s own approval screen, where you choose which Oura data to share and can decline any of it (Section 2a).</li>
             <li>Opt-in mechanisms for any direct marketing communications.</li>
           </ul>
 
@@ -170,6 +213,7 @@
           </p>
           <ul>
             <li><strong>Service Providers &amp; Processors:</strong> Cloud hosting, telemetry, and analytics under strict confidentiality contracts.</li>
+            <li><strong>AI Model Provider:</strong> To write educational responses, we send your intake answers and short context notes derived from any connected Oura readings, not your raw Oura data, to our AI provider, Anthropic, which processes them on our behalf.</li>
             <li><strong>Legal Authorities:</strong> When required by subpoena, court order, or applicable law to protect life and safety.</li>
             <li><strong>Business Transfers:</strong> In connection with any merger, sale, or transfer of company assets.</li>
           </ul>
@@ -177,6 +221,9 @@
           <h3>7. Data Retention</h3>
           <p>
             Data is retained for <span class="pending-tag">[X months/years]</span> or until account deletion is requested, except where longer retention is mandated for legal, compliance, or security purposes.
+          </p>
+          <p>
+            Oura data follows the shorter rules in Section 2a: raw readings are not kept after a screening runs.
           </p>
 
           <h3>8. Security</h3>
@@ -197,6 +244,9 @@
           <h3>10. Age Restriction &amp; Minors (Strictly 21+)</h3>
           <p>
             <strong>CheckPeps is strictly restricted to individuals twenty-one (21) years of age or older.</strong> We do not knowingly permit access to, or collect data from, anyone under 21. In compliance with COPPA and youth protection regulations, if we learn that any user is under 21, their account and associated data will be expunged immediately.
+          </p>
+          <p>
+            If you connect Oura, we also check the age on your Oura profile. If it is under 21, the Service is not available to you, whatever age you entered.
           </p>
 
           <h3>11. International Users</h3>

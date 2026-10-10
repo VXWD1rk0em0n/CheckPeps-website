@@ -1543,13 +1543,6 @@ main { counter-reset: chapter; }
   background-size: 100% 1px;
 }
 
-.footer__pending {
-  font-size: 0.75rem;
-  color: var(--flag-on-deep);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .footer__bottom {
   margin-top: 2.5rem;
   padding-top: 1.5rem;

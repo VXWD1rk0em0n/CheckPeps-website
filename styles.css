@@ -318,6 +318,23 @@ hr {
 .prose h3 { margin-top: 1.8em; }
 .prose li + li { margin-top: 0.4em; }
 
+/* Document tables. These rules used to sit in style attributes, which the CSP
+   blocks; the markup now carries only class="table". */
+.prose .table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.prose .table th,
+.prose .table td {
+  padding: 0.625rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.prose .table thead th { border-bottom: 2px solid var(--border-strong); }
+
 /* `.wrap.prose` collapsed the container itself to the measure and then centred
    it, so body copy floated mid-page while the page-head above stayed left
    aligned at the gutter. Keep the wrap's box and cap the children instead, so
@@ -1319,6 +1336,13 @@ main { counter-reset: chapter; }
 }
 
 .callout--pending .callout__title { color: var(--flag); }
+
+.callout--stop {
+  border-left-color: var(--stop);
+  background: var(--stop-subtle);
+}
+
+.callout--stop .callout__title { color: var(--stop); }
 
 /* Placeholder marker for copy awaiting team review. */
 .pending-tag {
